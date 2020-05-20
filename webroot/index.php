@@ -69,7 +69,7 @@ $app->container->singleton('Ctrl',function() use($app){
 // Routes
 $app->get('/', function() use($app){
     if($app->Ctrl->Auth->isauth()){
-
+        $app->render('home.php',compact('app'));
     }else{
         $app->redirect($app->urlFor(('login')));
     }

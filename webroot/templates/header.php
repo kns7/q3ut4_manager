@@ -15,6 +15,26 @@
     <link rel="stylesheet" type="text/css" href="/css/style.css">
     <script type="text/javascript" src="/js/jquery.min.js"></script>
     <script type="text/javascript" src="/js/vendors.min.js"></script>
-    <script type="text/javascript" src="/js/urt.app.js"></script>
+    <script type="text/javascript" src="/js/urt.js"></script>
 </head>
 <body>
+<nav class="navbar sticky-top navbar-dark navbar-expand-lg bg-dark">
+    <a class="navbar-brand" href="#">Urban Terror</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbar">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="/"><i class="fas fa-home"></i> Status</a>
+            </li>
+        </ul>
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="/logout"><i class="fas fa-sign-out-alt"></i> Déconnexion</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<div class="container-fluid">
