@@ -74,6 +74,8 @@ $app->get('/', function() use($app){
     }
 })->name("root");
 
+
+// Authentication Routes
 $app->get('/login',function() use($app){
     $app->render('login.php',compact('app'));
 })->name("login");
@@ -86,4 +88,9 @@ $app->post('/login',function() use($app){
         $app->flash('error','Mauvais Mot de passe!');
         $app->redirect($app->urlFor('login'));
     }
+});
+
+$app->get('/logout',function() use($app){
+    $app->Ctrl->Auth->logout();
+    $app->redirect($app->urlFor('login'));
 });
