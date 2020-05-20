@@ -11,6 +11,7 @@ use Slim\Slim;
 session_start();
 
 require "../vendor/autoload.php";
+require "../app/Controller/q3rcon.php";
 
 // MySQL Configuration / Connection
 $serviceContainer = Propel::getServiceContainer();
@@ -51,9 +52,10 @@ $app->configureMode('production', function () use ($app) {
 // Only invoked if mode is "development"
 $app->configureMode('development', function () use ($app) {
     $app->config(array(
-        'log.enable' => false,
+        'log.enable' => true,
         'debug' => true
     ));
+
 });
 
 // Dependency Injections
@@ -69,7 +71,9 @@ $app->container->singleton('Ctrl',function() use($app){
 // Routes
 $app->get('/', function() use($app){
     if($app->Ctrl->Auth->isauth()){
-        $app->render('home.php',compact('app'));
+        $players = $app->Ctrl->RCON->getPlayers();
+        $map = $app->Ctrl->RCON->getMap();
+        $app->render('home.php',compact('app','map','players'));
     }else{
         $app->redirect($app->urlFor(('login')));
     }
@@ -90,11 +94,27 @@ $app->post('/login',function() use($app){
         $app->redirect($app->urlFor('login'));
     }
 });
-
 $app->get('/logout',function() use($app){
     $app->Ctrl->Auth->logout();
     $app->redirect($app->urlFor('login'));
 });
 
+
+// Tests Routes
+if($app->getMode() == "development"){
+    $app->group('/test',function() use($app){
+        $app->get('/getMap', function() use($app){
+            $app->Ctrl->RCON->getMap();
+        });
+
+        $app->get('/config',function() use($app){
+            var_dump($app->Ctrl->Auth->getConfig());
+        });
+
+        $app->get('/players',function() use($app){
+            var_dump($app->Ctrl->RCON->getPlayers());
+        });
+    });
+}
 
 $app->run();

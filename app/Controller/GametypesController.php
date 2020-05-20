@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Controller\Controller;
 use GametypesQuery;
 
 class GametypesController extends Controller

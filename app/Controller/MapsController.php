@@ -24,4 +24,9 @@ class MapsController extends Controller
     {
         return MapsQuery::create()->findPk($id);
     }
+
+    public function getPerFile(string $file)
+    {
+        return MapsQuery::create()->findOneByFile($file);
+    }
 }
