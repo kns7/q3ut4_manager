@@ -7,6 +7,10 @@ class Controller{
     protected $config;
 
 
+    /**
+     * Controller constructor.
+     * @param $app
+     */
     public function __construct($app)
     {
         $this->app = $app;
@@ -18,6 +22,10 @@ class Controller{
         }
     }
 
+    /**
+     * Setup the Configuration from DB
+     * @return object
+     */
     public function getConfig()
     {
         return $this->config;
