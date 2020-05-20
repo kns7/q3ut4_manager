@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Controller;
+
 use App\Controller\Controller;
 
 class RCONController extends Controller
@@ -28,7 +30,7 @@ class RCONController extends Controller
 
     public function getPlayers()
     {
-        
+
     }
 
 }
