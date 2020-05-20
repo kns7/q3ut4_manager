@@ -19,17 +19,18 @@ $serviceContainer->setAdapterClass('default', 'mysql');
 $manager = new ConnectionManagerSingle();
 $manager->setConfiguration(array (
     'classname' => 'Propel\\Runtime\\Connection\\DebugPDO',
-    'dsn' => 'mysql:host='.$_SERVER['MYSQL_HOST'].';port='.$_SERVER['MYSQL_PORT'].';dbname='.$_SERVER['MYSQL_DB_VMAIL'],
+    'dsn' => 'mysql:host='.$_SERVER['MYSQL_HOST'].';port='.$_SERVER['MYSQL_PORT'].';dbname='.$_SERVER['MYSQL_DB'],
     'user' => $_SERVER['MYSQL_USER'],
     'password' => $_SERVER['MYSQL_PASSWORD'],
-    'attributes' =>
+    'settings' =>
         array (
-            'ATTR_EMULATE_PREPARES' => false,
-            'ATTR_TIMEOUT' => 30,
+            'charset' => 'utf8'
         )
 ));
-$manager->setName('vmail');
+$manager->setName('default');
 $serviceContainer->setConnectionManager('default', $manager);
+$serviceContainer->setDefaultDatasource('default');
+
 
 $sitemode = (isset($_SERVER['SITE_MODE']))?$_SERVER['SITE_MODE']:'production';
 
@@ -94,3 +95,6 @@ $app->get('/logout',function() use($app){
     $app->Ctrl->Auth->logout();
     $app->redirect($app->urlFor('login'));
 });
+
+
+$app->run();

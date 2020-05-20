@@ -24,7 +24,7 @@ class AuthController extends Controller
      */
     public function auth($password)
     {
-        if($this->app->config->www_password == $password){
+        if($password == $this->config->wwwpassword){
             $_SESSION['authOK'] = 'userlogged';
             return true;
         }else{

@@ -15,10 +15,8 @@ class Controller{
     {
         $this->app = $app;
         $this->config = (object)[];
-        foreach (\ConfigQuery::create()->orderByCategory()->find() as $c) {
-            $key = explode("_",$c->getKey());
-            if(!isset($this->config->{$key[0]})){ $this->config->{$key[0]} = (object)[]; }
-            $this->config->{$key[0]}->{$key[1]} = $c->getValue();
+        foreach (\ConfigQuery::create()->find() as $c) {
+            $this->config->{$c->getKey()} = $c->getValue();
         }
     }
 
