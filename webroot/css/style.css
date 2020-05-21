@@ -1,0 +1,38 @@
+.loader {
+    position: absolute;
+    top: 70px;
+    right: 10px;
+    z-index: 101;
+    background: #212121 10px 50% no-repeat;
+    font-weight: 500;
+    font-size: 16px;
+    margin-top: 2px;
+    margin-right: 4px;
+    border-radius: 4px;
+    border: 1px solid #808080;
+    padding: 6px 20px;
+    opacity: 0.8;
+    display: none;
+    color: #ececec;
+}
+
+.overlay {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    z-index: 10000;
+    display: none;
+    background: #d0d0d0;
+    opacity: 0.5;
+}
+
+.container-fluid {
+    margin-top: 20px;
+    padding: 0px 50px;
+}
+
+.table-hover tbody tr:hover {
+    background-color: rgba(253, 191, 0, 0.1);
+}

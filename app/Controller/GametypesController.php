@@ -24,4 +24,9 @@ class GametypesController extends Controller
     {
         return GametypesQuery::create()->findPk($id);
     }
+
+    public function getByCode($code)
+    {
+        return GametypesQuery::create()->findOneByCode($code);
+    }
 }

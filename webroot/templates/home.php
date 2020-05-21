@@ -2,41 +2,75 @@
 include('header.php');
 ?>
 <div class="row">
-    <h4>Liste des joueurs connectés</h4>
-    <div class="col-4">
-        <table class="table table-striped">
-            <thead>
-            <tr>
-                <th>Joueur</th>
-                <th>Score</th>
-                <th>Ping</th>
-            </tr>
-            </thead>
-            <tbody>
-            <?php
-            if(count($players) == 0){
-                ?>
-                <tr>
-                    <th colspan="3"><div class="alert-info">Personne en ce moment sur le serveur...</div></th>
-                </tr>
+    <div class="col-6">
+        <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+            <div class="col p-4 d-flex flex-column position-static">
+                <strong class="d-inline-block mb-2 text-primary">Map actuelle</strong>
+                <h3 class="mb-0"><?= (!is_null($status->map))?$status->map->getName():"-";?></h3>
+                <p class="card-text mb-auto"><?= (!is_null($status->map))?$status->map->getDescription():"-";?></p>
+            </div>
+            <div class="col-auto d-none d-lg-block">
                 <?php
-            }else{
-                foreach($players as $p){
-                    ?>
-                    <tr>
-                        <th><?= $p['name'];?></th>
-                        <th><?= $p['score'];?></th>
-                        <th><?= $p['ping'];?></th>
-                    </tr>
-                    <?php
+                if(!is_null($status->map)){
+                    ?><img src="<?= $status->map->getImgUrl();?>" alt="<?= $status->map->getFile();?>"/><?php
                 }
-            }
-            ?>
-            <tr>
-                <th></th>
-            </tr>
-            </tbody>
-        </table>
+                ?>
+            </div>
+        </div>
+    </div>
+    <div class="col-6">
+        <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+            <div class="col p-4 d-flex flex-column position-static">
+                <strong class="d-inline-block mb-2 text-primary">Mode de jeu</strong>
+                <h3 class="mb-0"><?= (!is_null($status->gametype))?$status->gametype->getName():"-";?></h3>
+                <p class="card-text mb-auto text-muted"><?= (!is_null($status->gametype))?$status->gametype->getDescription():"-";?></p>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+            <div class="col p-4 d-flex flex-column position-static">
+                <strong class="d-inline-block mb-2 text-primary">Joueurs en ligne</strong>
+                <p class="card-text mb-auto text-muted">
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th>Joueur</th>
+                        <th>Score</th>
+                        <th>Ping</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <?php
+                    if($players === false){
+                        echo "Bad rconpassword";
+                    }else{
+                        if(count($players) == 0){
+                            ?>
+                            <tr>
+                                <th colspan="3"><div class="alert-info">Personne en ce moment sur le serveur...</div></th>
+                            </tr>
+                            <?php
+                        }else{
+                            foreach($players as $p){
+                                ?>
+                                <tr>
+                                    <td><?= $p['name'];?></td>
+                                    <td><?= $p['score'];?></td>
+                                    <td><?= $p['ping'];?></td>
+                                </tr>
+                                <?php
+                            }
+                        }
+                    }
+                    ?>
+                    </tbody>
+                </table>
+                </p>
+            </div>
+        </div>
     </div>
 </div>
 

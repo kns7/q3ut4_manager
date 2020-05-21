@@ -72,8 +72,8 @@ $app->container->singleton('Ctrl',function() use($app){
 $app->get('/', function() use($app){
     if($app->Ctrl->Auth->isauth()){
         $players = $app->Ctrl->RCON->getPlayers();
-        $map = $app->Ctrl->RCON->getMap();
-        $app->render('home.php',compact('app','map','players'));
+        $status = $app->Ctrl->RCON->getStatus();
+        $app->render('home.php',compact('app','status','players'));
     }else{
         $app->redirect($app->urlFor(('login')));
     }
