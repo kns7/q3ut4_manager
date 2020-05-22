@@ -17,3 +17,6 @@ propel.yml
 
 # PHPStorm
 .idea/
+
+# Local Dev
+tmp/
