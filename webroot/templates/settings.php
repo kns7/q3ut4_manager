@@ -53,6 +53,24 @@
                         </div>
                     </div>
                 </div>
+                <div class="form-group row">
+                    <label for="reload" class="col-sm-4 col-form-label">Relancer tout de suite ? </label>
+                    <div class="col-sm-2">
+                        <input type="checkbox" id="reload" checked data-toggle="toggle" data-on="Oui" data-off="Non">
+                    </div>
+                    <div class="col-sm-6">
+                        <p>
+                            <small>
+                                <strong class="text-primary">Oui</strong> Le serveur charge immédiatement la nouvelle configuration et relance la partie
+                                <br/>
+                                <strong class="text-dark">Non</strong> Le serveur chargera la nouvelle configuration au prochain changement de carte
+                            </small>
+                        </p>
+                        <p>
+                            <div class="alert alert-warning"><small><i class="fa fa-exclamation-circle"></i> Un changement de carte relancera tout de suite la nouvelle configuration ! </small></div>
+                        </p>
+                    </div>
+                </div>
             </form>
         </div>
     </div>

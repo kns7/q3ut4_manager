@@ -7,6 +7,7 @@ $(document).ready(function(){
        .on("click",".btn-settings",function(e){
             $.get('/ajax/settings',function(d){
                 $(".settings-content").html(d);
+                $('#reload').bootstrapToggle()
                 $("#settings").modal('show');
             })
        })
