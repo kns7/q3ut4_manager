@@ -1,10 +1,11 @@
+<div class="settings border rounded overflow-hidden flex-md-row shadow-lg p-3"></div>
 </div> <!-- Container Fluid-->
 <div class="overlay"></div>
 <div class="loader"><i class="fas fa-spinner fa-spin"></i> Chargement</div>
 <!-- Modal Box -->
-<div class="modal" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content"></div>
+<div class="modal modal-settings" tabindex="-1" role="dialog" id="settings">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content settings-content"></div>
     </div>
 </div>
 

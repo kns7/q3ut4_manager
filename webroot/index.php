@@ -104,7 +104,17 @@ $app->group('/ajax',function() use($app){
         $maps = $app->Ctrl->Maps->getList();
         $gametypes = $app->Ctrl->Gametypes->getList();
         $cvars = $app->Ctrl->RCON->getCvarList();
-        $app->render('settings.php',compact('app','maps','gametypes','cvars'));
+        $actual = [
+            'map' => $app->Ctrl->Maps->getByFile($cvars['mapname']),
+            'gametype' => $app->Ctrl->Gametypes->getByCode($cvars['g_gametype'])
+        ];
+        $app->render('settings.php',compact('app','maps','gametypes','cvars','actual'));
+    });
+    $app->get('/gametype-desc/:id',function($id) use($app){
+        $gametype = $app->Ctrl->Gametypes->get($id);
+        if(!is_null($gametype)){
+            echo $gametype->getDescription();
+        }
     });
 });
 
