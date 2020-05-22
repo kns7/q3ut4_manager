@@ -26,9 +26,9 @@
 
     <div class="collapse navbar-collapse" id="navbar">
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item">
+            <!--<li class="nav-item">
                 <a class="nav-link" href="/"><i class="fas fa-home"></i> Status</a>
-            </li>
+            </li>-->
         </ul>
         <ul class="navbar-nav">
             <li class="nav-item">

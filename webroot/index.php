@@ -99,6 +99,15 @@ $app->get('/logout',function() use($app){
     $app->redirect($app->urlFor('login'));
 });
 
+$app->group('/ajax',function() use($app){
+    $app->get('/settings',function() use($app){
+        $maps = $app->Ctrl->Maps->getList();
+        $gametypes = $app->Ctrl->Gametypes->getList();
+        $cvars = $app->Ctrl->RCON->getCvarList();
+        $app->render('settings.php',compact('app','maps','gametypes','cvars'));
+    });
+});
+
 
 // Tests Routes
 if($app->getMode() == "development"){
@@ -108,11 +117,21 @@ if($app->getMode() == "development"){
         });
 
         $app->get('/config',function() use($app){
+            echo "<pre>";
             var_dump($app->Ctrl->Auth->getConfig());
+            echo "</pre>";
+        });
+
+        $app->get('/cvars',function() use($app){
+            echo "<pre>";
+            var_dump($app->Ctrl->RCON->getCvarList());
+            echo "</pre>";
         });
 
         $app->get('/players',function() use($app){
+            echo "<pre>";
             var_dump($app->Ctrl->RCON->getPlayers());
+            echo "</pre>";
         });
     });
 }

@@ -14,4 +14,17 @@ use Base\Maps as BaseMaps;
 class Maps extends BaseMaps
 {
 
+    public function getImg()
+    {
+        if(file_exists(dirname(__FILE__)."/../../webroot/maps/".$this->getFile().".jpg")){
+            return "maps/".$this->getFile().".jpg";
+        }else{
+            if(empty($this->getImgurl()) || is_null($this->getImgurl())){
+                return "maps/unknown.jpg";
+            }else{
+                return $this->getImgurl();
+            }
+
+        }
+    }
 }

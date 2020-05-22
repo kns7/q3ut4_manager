@@ -36,3 +36,10 @@
 .table-hover tbody tr:hover {
     background-color: rgba(253, 191, 0, 0.1);
 }
+
+.btn-light {
+    background-color: #dadada;
+}
+.reload-newconf {
+    display: none;
+}
