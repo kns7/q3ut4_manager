@@ -1,22 +1,40 @@
-function loader(status){
+function loader(status,overlay){
+    if(overlay === undefined){
+        overlay = false;
+    }
     if(status){
         $(".loader").fadeIn(200);
-        $(".overlay").fadeIn(10);
+        if(overlay){ $(".overlay").fadeIn(10); }
     }else{
-        $(".overlay").fadeOut(10);
+        if($(".overlay").is(":visible")){ $(".overlay").fadeOut(10); }
         $(".loader").fadeOut(200);
     }
 }
 
 function reloadStatus(){
+    loader(true);
     $.ajax({
-        url: "/ajax/getStatus",
+        url: "/ajax/status",
         method: "GET",
         success: function(datas,status){
-
+            $(".map-img").attr('src',datas.mapimg);
+            $(".map-name").text(datas.mapname);
+            $(".timelimit-status").text(datas.timelimit);
+            $(".roundtime-status").text(datas.roundtime);
+            $(".gametype-name").text(datas.gametypename)
+            $(".gametype-description").text(datas.gametypedescription)
+            loader(false);
         }
     })
 }
+
+// Daemon
+setTimeout(function(){
+    reloadStatus();
+    setTimeout(arguments.callee,20000);
+},20000);
+
+
 
 $(document).ready(function(){
    $(this)
@@ -41,16 +59,22 @@ $(document).ready(function(){
               $(".gametype-preview small").html(d);
            });
        })
-       .on('click','.btn-reload',function(e){
+       .on('click','.btn-reload-confirm',function(e){
            e.preventDefault();
            e.stopPropagation();
-           loader(true);
+           loader(true,true);
            $.ajax({
                method: "POST",
-               url: "/ajax/actions/reload",
+               url: "/ajax/action/reload",
                success: function(xhr){
                    loader(false);
                }
            })
        })
+       .on("click",".",function(e){
+           e.preventDefault();
+           e.stopPropagation();
+
+       })
 });
+

@@ -119,6 +119,20 @@ if($app->Ctrl->Auth->isauth()){
                 echo $gametype->getDescription();
             }
         });
+        $app->get("/status",function() use($app){
+            $app->response->setStatus(200);
+            $app->response()->headers->set('Content-Type', 'application/json; charset=utf-8');
+            $status = $app->Ctrl->RCON->getStatus();
+            echo json_encode((object)[
+                "mapname" => $status->map->getName(),
+                "mapimg" => $status->map->getImg(),
+                "timelimit" => $status->cvars["timelimit"],
+                "roundtime" => $status->cvars["g_roundtime"],
+                "gametypename" => $status->gametype->getName(),
+                "gametypedescription" => $status->gametype->getDescription()
+            ]);
+
+        });
 
         $app->group('/action',function() use($app){
             $app->post('/reload',function() use($app){
