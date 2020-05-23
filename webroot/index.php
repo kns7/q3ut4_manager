@@ -122,13 +122,14 @@ if($app->Ctrl->Auth->isauth()){
 
         $app->group('/action',function() use($app){
             $app->post('/reload',function() use($app){
+                $app->response->setStatus(200);
                 $app->Ctrl->RCON->serverReload();
             });
 
             $app->post('/saveParams',function() use($app){
-                if(isset($_POST['g_gametype'])){
-                    $app->Ctrl->RCON->
-                }
+                $app->response->setStatus(200);
+                $app->response()->headers->set('Content-Type', 'application/json; charset=utf-8');
+                echo json_encode($app->Ctrl->RCON->saveParams($_POST));
             });
         });
     });

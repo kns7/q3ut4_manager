@@ -1,3 +1,23 @@
+function loader(status){
+    if(status){
+        $(".loader").fadeIn(200);
+        $(".overlay").fadeIn(10);
+    }else{
+        $(".overlay").fadeOut(10);
+        $(".loader").fadeOut(200);
+    }
+}
+
+function reloadStatus(){
+    $.ajax({
+        url: "/ajax/getStatus",
+        method: "GET",
+        success: function(datas,status){
+
+        }
+    })
+}
+
 $(document).ready(function(){
    $(this)
        .on("click",".btn-reload",function(e){
@@ -21,5 +41,16 @@ $(document).ready(function(){
               $(".gametype-preview small").html(d);
            });
        })
-       .on("click",'select')
+       .on('click','.btn-reload',function(e){
+           e.preventDefault();
+           e.stopPropagation();
+           loader(true);
+           $.ajax({
+               method: "POST",
+               url: "/ajax/actions/reload",
+               success: function(xhr){
+                   loader(false);
+               }
+           })
+       })
 });

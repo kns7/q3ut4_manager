@@ -77,5 +77,5 @@
 </div>
 <div class="modal-footer">
     <button type="button" class="btn btn-outline-dark" data-dismiss="modal"><i class="fa fa-chevron-left"></i> Retour</button>
-    <button type="button" class="btn btn-outline-success"><i class="fa fa-save"></i> Enregistrer</button>
+    <button type="button" class="btn btn-outline-success btn-saveparams"><i class="fa fa-save"></i> Enregistrer</button>
 </div>
