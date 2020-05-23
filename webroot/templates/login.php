@@ -14,8 +14,8 @@
 <body>
 <div class="container">
     <div class="card card-container">
-        <img id="profile-img" class="profile-img-card" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png" />
-        <p id="profile-name" class="profile-name-card"></p>
+        <img id="profile-img" class="profile-img-card" src="/img/urt-logo.png" />
+        <p id="profile-name" class="profile-name-card"><h5 class="text-center"><span class="text-primary">12 Salopards</span><br/><small class="text-muted">Serveur Urban Terror</small></h5></p>
         <form class="form-signin" method="POST" action="/login">
             <input type="password" id="password" name="password" class="form-control" placeholder="Mot de passe" required>
             <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Connexion</button>
