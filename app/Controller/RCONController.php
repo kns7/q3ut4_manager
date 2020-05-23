@@ -31,6 +31,29 @@ class RCONController extends Controller
     {
         $this->rconCmd = "map ". $map->getFile();
         $this->sendMessage("*** Changement de carte *** | Prochaine carte: ".$map->getName());
+        sleep(1);
+        $this->send_command($this->rconCmd);
+    }
+
+    /**
+     * @param $timelimit
+     */
+    public function setTimelimit($timelimit)
+    {
+        $this->rconCmd = "set timelimit $timelimit";
+        $this->sendMessage("*** Changement de durée de partie *** | Nouvelle durée: ".$timelimit." min");
+        sleep(1);
+        $this->send_command($this->rconCmd);
+    }
+
+    /**
+     * @param $roundtime
+     */
+    public function setRoundTime($roundtime)
+    {
+        $this->rconCmd = "set g_roundtime $roundtime";
+        $this->sendMessage("*** Changement de durée d'un round *** | Nouvelle durée: ".$roundtime." min");
+        sleep(1);
         $this->send_command($this->rconCmd);
     }
 
@@ -43,12 +66,55 @@ class RCONController extends Controller
     {
         $this->rconCmd = "set g_gametype ". $type->getCode();
         $this->sendMessage("*** Changement de mode de jeu *** | Prochain mode: ".$type->getName());
+        sleep(1);
         $this->send_command($this->rconCmd);
     }
 
+    /**
+     * Apply parameters to server and return the actions done through an array of booleans
+     * @param array $post
+     * @return array
+     */
+    public function saveParams(array $post)
+    {
+        $return = [
+            'gametype' => false,
+            'timelimit' => false,
+            'roundtime' => false,
+            'map' => false,
+            'reload' => false
+        ];
+
+        if(isset($post['gametype']) && !empty($post['gametype'])){
+            $this->setGametype($this->app->Ctrl->Gametypes->get($post['gametype']));
+            $return['gametype'] = true;
+        }
+        if(isset($post['timelimit']) && !empty($post['timelimit'])){
+            $this->setTimelimit($post['timelimit']);
+            $return['gametype'] = true;
+        }
+        if(isset($post['roundtime']) && !empty($post['roundtime'])){
+            $this->setRoundTime($post['roundtime']);
+            $return['roundtime'] = true;
+        }
+        if(isset($post['map']) && !empty($post['map'])){
+            $this->setMap($post['map']);
+            $return['map'] = true;
+        }
+        if(isset($post['reload']) && isset($post['reload']) === true){
+            $this->serverReload();
+            $return['reload'] = true;
+        }
+        return $return;
+    }
+
+
+    /**
+     * Reload Server
+     */
     public function serverReload()
     {
-        $this->sendMessage("*** Rechargement du Serveur ***");
+        $this->sendMessage("*** Rechargement du Serveur, Redémarrage de la partie ***");
         sleep(1);
         $this->send_command("reload");
     }
@@ -82,7 +148,8 @@ class RCONController extends Controller
 
 
     /**
-     * Get the actual Gametype over RCON command
+     *
+     * @return mixed
      */
     public function getGametype()
     {
@@ -94,6 +161,7 @@ class RCONController extends Controller
 
     /**
      * Get the list of all Players connected to the Server
+     * @return array|bool
      */
     public function getPlayers()
     {
@@ -164,16 +232,10 @@ class RCONController extends Controller
 
     }
 
-    // Precondition: A socket has been opened without error by the constructor
-        // Postcondidtion: The given command will be sent and a response will be
-        //      recoverable from the function get_response()
     private function send_command($cmd) {
         fwrite($this->socket_connection, str_repeat(chr(255), 4) . "rcon " . $this->config->rconpassword . " " . $cmd . "\n");
     }
 
-    // Get the server's response to our previous query.
-    // Precondition: A command should have already been sent with send_command($cmd).
-    // Postcondidtion: The server's response string will be returned.
     private function get_response() {
         stream_set_timeout($this->socket_connection, 0, 500000);
         $buffer = "";

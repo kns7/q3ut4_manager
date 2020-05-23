@@ -14,6 +14,7 @@ $(document).ready(function(){
        .on('change','select#map',function(e){
            console.log("Map Update");
            $(".map-preview").attr('src',$(this).find(':selected').attr('data-img'));
+           $("#reload").bootstrapToggle('on').bootstrapToggle('disable');
        })
        .on("change",'select#gametype',function(e){
            $.get("/ajax/gametype-desc/"+$(this).val(),function(d){

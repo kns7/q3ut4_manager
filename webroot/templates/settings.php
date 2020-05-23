@@ -10,7 +10,7 @@
             <form class="form-settings">
                 <div class="form-group row">
                     <label for="map" class="col-sm-4 col-form-label">Carte</label>
-                    <div class="col-sm-2"><img class="map-preview" src="<?= $actual['map']->getImg();?>"/></div>
+                    <div class="col-sm-2"><img class="map-preview" src="<?= (!is_null($actual['map']))?$actual['map']->getImg():"/maps/unknown.jpg";?>"/></div>
                     <div class="col-sm-6">
                         <select class="form-control" id="map">
                         <?php

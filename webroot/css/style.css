@@ -34,6 +34,10 @@
     position: relative;
 }
 
+.map-img {
+    max-height: 140px;
+}
+
 .table-hover tbody tr:hover {
     background-color: rgba(253, 191, 0, 0.1);
 }

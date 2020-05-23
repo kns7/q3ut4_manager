@@ -94,29 +94,45 @@ $app->post('/login',function() use($app){
         $app->redirect($app->urlFor('login'));
     }
 });
-$app->get('/logout',function() use($app){
-    $app->Ctrl->Auth->logout();
-    $app->redirect($app->urlFor('login'));
-});
 
-$app->group('/ajax',function() use($app){
-    $app->get('/settings',function() use($app){
-        $maps = $app->Ctrl->Maps->getList();
-        $gametypes = $app->Ctrl->Gametypes->getList();
-        $cvars = $app->Ctrl->RCON->getCvarList();
-        $actual = [
-            'map' => $app->Ctrl->Maps->getByFile($cvars['mapname']),
-            'gametype' => $app->Ctrl->Gametypes->getByCode($cvars['g_gametype'])
-        ];
-        $app->render('settings.php',compact('app','maps','gametypes','cvars','actual'));
+if($app->Ctrl->Auth->isauth()){
+    $app->get('/logout',function() use($app){
+        $app->Ctrl->Auth->logout();
+        $app->redirect($app->urlFor('login'));
     });
-    $app->get('/gametype-desc/:id',function($id) use($app){
-        $gametype = $app->Ctrl->Gametypes->get($id);
-        if(!is_null($gametype)){
-            echo $gametype->getDescription();
-        }
+
+    // Ajax Requests
+    $app->group('/ajax',function() use($app){
+        $app->get('/settings',function() use($app){
+            $maps = $app->Ctrl->Maps->getList();
+            $gametypes = $app->Ctrl->Gametypes->getList();
+            $cvars = $app->Ctrl->RCON->getCvarList();
+            $actual = [
+                'map' => $app->Ctrl->Maps->getByFile($cvars['mapname']),
+                'gametype' => $app->Ctrl->Gametypes->getByCode($cvars['g_gametype'])
+            ];
+            $app->render('settings.php',compact('app','maps','gametypes','cvars','actual'));
+        });
+        $app->get('/gametype-desc/:id',function($id) use($app){
+            $gametype = $app->Ctrl->Gametypes->get($id);
+            if(!is_null($gametype)){
+                echo $gametype->getDescription();
+            }
+        });
+
+        $app->group('/action',function() use($app){
+            $app->post('/reload',function() use($app){
+                $app->Ctrl->RCON->serverReload();
+            });
+
+            $app->post('/saveParams',function() use($app){
+                if(isset($_POST['g_gametype'])){
+                    $app->Ctrl->RCON->
+                }
+            });
+        });
     });
-});
+}
 
 
 // Tests Routes

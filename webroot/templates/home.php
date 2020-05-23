@@ -14,7 +14,7 @@ include('header.php');
                     <div class="col-auto d-none d-lg-block">
                         <?php
                         if(!is_null($status->map)){
-                            ?><img src="<?= $status->map->getImg();?>" alt="<?= $status->map->getFile();?>"/><?php
+                            ?><img src="<?= $status->map->getImg();?>" class="map-img" alt="<?= $status->map->getFile();?>"/><?php
                         }
                         ?>
                     </div>
