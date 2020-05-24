@@ -94,7 +94,7 @@ $app->post('/login',function() use($app){
     }
 });
 
-$app->get('/daemon/noficationsTelegram',function() use($app){
+$app->get('/daemon/notificationsTelegram',function() use($app){
     $tmpstorage = dirname(__FILE__)."/../app/config/laststate.tmp";
     if(!file_exists($tmpstorage)){
         $laststate = [];
