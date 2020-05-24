@@ -16,7 +16,7 @@ include('header.php');
                             </small>
                         </p>
                     </div>
-                    <div class="col-auto d-none d-lg-block">
+                    <div class="col-auto">
                         <?php
                         if(!is_null($status->map)){
                             ?><img src="<?= $status->map->getImg();?>" class="map-img" alt="<?= $status->map->getFile();?>"/><?php
@@ -68,7 +68,7 @@ include('header.php');
             </div>
         </div>
     </div>
-    <div class="col-md-3 col-sm-10 offset-md-0 offset-sm-2">
+    <div class="col-md-3 col-sm-10 offset-md-0 offset-sm-2 mb-4">
         <button type="button" class="btn btn-block btn-light btn-settings"><i class="fa fa-cogs"></i> Paramètres</button>
         <button type="button" class="btn btn-block btn-light btn-reload"><i class="fa fa-sync-alt"></i> Recharger le serveur</button>
     </div>
