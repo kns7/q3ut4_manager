@@ -34,9 +34,9 @@ class Controller{
         $apiToken = $this->config->telegramtoken;
         $data = [
             'chat_id' => $this->config->telegramchannel,
-            'text' => $text
+            'text' => $text,
+            'parse_mode' => 'Markdown'
         ];
-
-        file_get_contents("https://api.telegram.org/bot$apiToken/sendMessage?" . http_build_query($data) );
+        return file_get_contents("https://api.telegram.org/bot$apiToken/sendMessage?" . http_build_query($data) );
     }
 }

@@ -108,12 +108,22 @@ $app->get('/daemon/notificationsTelegram',function() use($app){
     fwrite($storage,json_encode($players));
 
     if(is_array($laststate)) {
+        if($_SERVER['SITE_MODE']  == "development"){ echo "Last State exists<br/>"; }
         if (count($laststate) == 0 && count($players) > 0) {
             $list = "";
             foreach ($players as $p) {
-                $list .= $players['name'] . "\n";
+                $list .= "- _".$p['name'] . "_\n";
             }
-            $app->Ctrl->RCON->sendNotificationTelegram("Des joueurs sont sur le serveur. Venez les rejoindre!\nListe des joueurs en ligne:\n$list");
+            $msg = "*Hey!*\nIl y a du monde sur le serveur, viens donc nous rejoindre\n$list";
+            if($_SERVER['SITE_MODE']  == "development"){ echo "Sending Telegram Message:<br/><pre>$msg</pre>"; }
+            $return = $app->Ctrl->RCON->sendNotificationTelegram($msg);
+            if($_SERVER['SITE_MODE']  == "development"){
+                echo "<pre>";
+                var_dump($return);
+                echo "</pre>";
+            }
+        }else{
+            if($_SERVER['SITE_MODE']  == "development"){ echo "Same results as previous test: ". count($players)." player(s) online<br/>";  }
         }
     }
 });
