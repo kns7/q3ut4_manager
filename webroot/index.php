@@ -11,7 +11,6 @@ use Slim\Slim;
 session_start();
 
 require "../vendor/autoload.php";
-require "../app/Controller/q3rcon.php";
 
 // MySQL Configuration / Connection
 $serviceContainer = Propel::getServiceContainer();
@@ -95,6 +94,30 @@ $app->post('/login',function() use($app){
     }
 });
 
+$app->get('/daemon/noficationsTelegram',function() use($app){
+    $tmpstorage = dirname(__FILE__)."/../app/config/laststate.tmp";
+    if(!file_exists($tmpstorage)){
+        $laststate = [];
+    }else{
+        $laststate = json_decode(file_get_contents($tmpstorage));
+    }
+    // Storage File
+    $storage = fopen($tmpstorage,"w");
+
+    $players = $app->Ctrl->RCON->getPlayers();
+    fwrite($storage,json_encode($players));
+
+    if(is_array($laststate)) {
+        if (count($laststate) == 0 && count($players) > 0) {
+            $list = "";
+            foreach ($players as $p) {
+                $list .= $players['name'] . "\n";
+            }
+            $app->Ctrl->RCON->sendNotificationTelegram("Des joueurs sont sur le serveur. Venez les rejoindre!\nListe des joueurs en ligne:\n$list");
+        }
+    }
+});
+
 if($app->Ctrl->Auth->isauth()){
     $app->get('/logout',function() use($app){
         $app->Ctrl->Auth->logout();
@@ -133,7 +156,6 @@ if($app->Ctrl->Auth->isauth()){
                 "gametypedescription" => $status->gametype->getDescription(),
                 "players" => $players
             ]);
-
         });
 
         $app->group('/action',function() use($app){
@@ -186,6 +208,10 @@ if($app->getMode() == "development"){
             echo "<pre>";
             var_dump($app->Ctrl->RCON->getPlayers());
             echo "</pre>";
+        });
+
+        $app->get('/sendTelegram',function() use($app){
+            $app->Ctrl->Auth->sendNotificationTelegram("Serialg vient de se connecter");
         });
     });
 }

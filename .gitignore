@@ -23,3 +23,5 @@ maps/
 
 # Local Dev
 tmp/
+
+app/config/laststate.tmp
