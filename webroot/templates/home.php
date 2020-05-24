@@ -38,42 +38,31 @@ include('header.php');
                 <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
                     <div class="col p-4 d-flex flex-column position-static">
                         <strong class="d-inline-block mb-2 text-primary">Joueurs en ligne</strong>
-                        <p class="card-text mb-auto text-muted">
-                        <table class="table table-hover">
+                        <div class="m-5 alert alert-info text-center alert-noplayers <?=($players !== false && count($players) > 0)?"hidden":"";?>"><i class="fa fa-info-circle"></i> Personne en ce moment sur le serveur...</div>
+                        <table class="table table-hover table-players <?=($players !== false && count($players) > 0)?"":"hidden";?>">
                             <thead>
                             <tr>
                                 <th>Joueur</th>
-                                <th>Score</th>
-                                <th>Ping</th>
+                                <th class="text-right">Score</th>
+                                <th class="text-right">Ping</th>
                             </tr>
                             </thead>
                             <tbody>
                             <?php
-                            if($players === false){
-                                echo "Bad rconpassword";
-                            }else{
-                            if(count($players) == 0){
-                                ?>
-                                </tbody>
-                            </table>
-                            <div class="m-5 alert alert-info text-center">Personne en ce moment sur le serveur...</div>
-                            <?php
-                            }else{
+                            if($players !== false && count($players) > 0){
                                 foreach($players as $p){
                                     ?>
                                     <tr>
                                         <td><?= $p['name'];?></td>
-                                        <td><?= $p['score'];?></td>
-                                        <td><?= $p['ping'];?></td>
+                                        <td class="text-right"><?= $p['score'];?></td>
+                                        <td class="text-right"><?= $p['ping'];?></td>
                                     </tr>
                                     <?php
                                 }
                             }
-                        }
                         ?>
                         </tbody>
                         </table>
-                        </p>
                     </div>
                 </div>
             </div>

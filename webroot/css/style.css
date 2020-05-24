@@ -62,3 +62,6 @@ select#map.form-control {
 .map-preview {
     max-height: 90px;
 }
+.hidden {
+    display:none;
+}

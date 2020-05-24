@@ -232,7 +232,10 @@ class RCONController extends Controller
             $player['guid'] = $this->dump_guid($player_status[0]);
             $players[] = $player;
         }
+        //return [];
         return $players;
+
+
     }
 
     public function getCvarList()

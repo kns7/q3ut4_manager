@@ -23,6 +23,17 @@ function reloadStatus(){
             $(".roundtime-status").text(datas.roundtime);
             $(".gametype-name").text(datas.gametypename)
             $(".gametype-description").text(datas.gametypedescription)
+            if(datas.players.length > 0){
+                $(".alert-noplayers").addClass("hidden");
+                $("table.table-players tbody").html("")
+                for(i=0;i<datas.players.length;i++){
+                    $("table.table-players tbody").append("<tr><td>"+datas.players[i].name+"</td><td class='text-right'>"+datas.players[i].score+"</td><td class='text-right'>"+datas.players[i].ping+"</td></tr>")
+                }
+                $("table.table-players").removeClass("hidden");
+            }else{
+                $(".alert-noplayers").removeClass("hidden");
+                $("table.table-players").addClass("hidden");
+            }
             loader(false);
         }
     })
