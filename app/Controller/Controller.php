@@ -28,4 +28,15 @@ class Controller{
     {
         return $this->config;
     }
+
+    public function sendNotificationTelegram($text)
+    {
+        $apiToken = $this->config->telegramtoken;
+        $data = [
+            'chat_id' => $this->config->telegramchannel,
+            'text' => $text
+        ];
+
+        file_get_contents("https://api.telegram.org/bot$apiToken/sendMessage?" . http_build_query($data) );
+    }
 }

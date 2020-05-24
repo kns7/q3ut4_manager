@@ -232,10 +232,7 @@ class RCONController extends Controller
             $player['guid'] = $this->dump_guid($player_status[0]);
             $players[] = $player;
         }
-        //return [];
         return $players;
-
-
     }
 
     public function getCvarList()
@@ -253,7 +250,6 @@ class RCONController extends Controller
             $this->cvars[$cvar[0]] = trim($value); // Load each the array into a cvarname=>cvarvalue array
         }
         return $this->cvars;
-
     }
 
     private function send_command($cmd) {
@@ -283,7 +279,6 @@ class RCONController extends Controller
     // Remove ^# colors
     private function strip_colors($str) {
         return preg_replace("/\^./","", $str);
-
     }
 
     private function dump_guid($clientid) {
@@ -300,7 +295,6 @@ class RCONController extends Controller
         $duinfoguid = $this->strip_space($duinfoguid3);
 
         return $duinfoguid;
-
     }
 
     private function close() {

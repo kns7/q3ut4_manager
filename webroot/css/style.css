@@ -65,3 +65,10 @@ select#map.form-control {
 .hidden {
     display:none;
 }
+
+@media (max-width: 576px) {
+    .map-img {
+        max-height: 100px;
+        margin: 14px 10px 0px 0px;
+    }
+}
