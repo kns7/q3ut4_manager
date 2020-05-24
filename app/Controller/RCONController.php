@@ -30,8 +30,8 @@ class RCONController extends Controller
     public function setMap(\Maps $map)
     {
         $this->rconCmd = "map ". $map->getFile();
-        $this->sendMessage("*** Changement de carte *** | Prochaine carte: ".$map->getName());
-        sleep(1);
+        $this->sendMessage("*** Changement de carte *** | ".$map->getName());
+        sleep(3);
         $this->send_command($this->rconCmd);
     }
 
@@ -42,7 +42,7 @@ class RCONController extends Controller
     {
         $this->rconCmd = "set timelimit $timelimit";
         $this->sendMessage("*** Changement de durée de partie *** | Nouvelle durée: ".$timelimit." min");
-        sleep(1);
+        sleep(2);
         $this->send_command($this->rconCmd);
     }
 
@@ -53,7 +53,7 @@ class RCONController extends Controller
     {
         $this->rconCmd = "set g_roundtime $roundtime";
         $this->sendMessage("*** Changement de durée d'un round *** | Nouvelle durée: ".$roundtime." min");
-        sleep(1);
+        sleep(2);
         $this->send_command($this->rconCmd);
     }
 
@@ -66,7 +66,7 @@ class RCONController extends Controller
     {
         $this->rconCmd = "set g_gametype ". $type->getCode();
         $this->sendMessage("*** Changement de mode de jeu *** | Prochain mode: ".$type->getName());
-        sleep(1);
+        sleep(2);
         $this->send_command($this->rconCmd);
     }
 
@@ -86,24 +86,45 @@ class RCONController extends Controller
         ];
 
         if(isset($post['gametype']) && !empty($post['gametype'])){
-            $this->setGametype($this->app->Ctrl->Gametypes->get($post['gametype']));
-            $return['gametype'] = true;
+            try{
+                $this->setGametype($this->app->Ctrl->Gametypes->get($post['gametype']));
+                $return['gametype'] = true;
+            }catch(\Exception $e){
+                $return['map'] = $e->getMessage();
+            }
         }
         if(isset($post['timelimit']) && !empty($post['timelimit'])){
-            $this->setTimelimit($post['timelimit']);
-            $return['gametype'] = true;
+            try {
+                $this->setTimelimit($post['timelimit']);
+                $return['gametype'] = true;
+            }catch(\Exception $e){
+                $return['map'] = $e->getMessage();
+            }
         }
         if(isset($post['roundtime']) && !empty($post['roundtime'])){
-            $this->setRoundTime($post['roundtime']);
-            $return['roundtime'] = true;
+            try{
+                $this->setRoundTime($post['roundtime']);
+                $return['roundtime'] = true;
+            }catch(\Exception $e){
+                $return['map'] = $e->getMessage();
+            }
         }
         if(isset($post['map']) && !empty($post['map'])){
-            $this->setMap($post['map']);
-            $return['map'] = true;
+            try{
+                $this->setMap($this->app->Ctrl->Maps->get($post['map']));
+                $return['map'] = true;
+            }catch(\Exception $e){
+                $return['map'] = $e->getMessage();
+            }
+
         }
         if(isset($post['reload']) && isset($post['reload']) === true){
-            $this->serverReload();
-            $return['reload'] = true;
+            try {
+                $this->serverReload();
+                $return['reload'] = true;
+            }catch(\Exception $e){
+                $return['map'] = $e->getMessage();
+            }
         }
         return $return;
     }

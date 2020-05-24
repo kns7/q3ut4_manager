@@ -59,9 +59,13 @@ $(document).ready(function(){
               $(".gametype-preview small").html(d);
            });
        })
+       .on("change",".form-settings .form-control",function(e){
+           $(this).attr('data-changes','1');
+       })
        .on('click','.btn-reload-confirm',function(e){
            e.preventDefault();
            e.stopPropagation();
+           $("#reload-confirm").modal("hide");
            loader(true,true);
            $.ajax({
                method: "POST",
@@ -71,10 +75,28 @@ $(document).ready(function(){
                }
            })
        })
-       .on("click",".",function(e){
+       .on("click",".btn-saveparams",function(e){
            e.preventDefault();
            e.stopPropagation();
-
+           loader(true,true);
+           var data = {};
+           $(".form-settings .form-control").each(function(){
+               if($(this).attr('data-changes') == "1"){
+                   data[$(this).attr('id')] = $(this).val();
+               }
+           });
+           $("#settings").modal("hide");
+           $.ajax({
+               method: "POST",
+               url: "/ajax/action/saveParams",
+               data: data,
+               success: function(d){
+                   loader(false);
+               },
+               error: function(d){
+                   loader(false);
+               }
+           })
        })
 });
 

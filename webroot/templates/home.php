@@ -8,8 +8,13 @@ include('header.php');
                 <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
                     <div class="col p-4 d-flex flex-column position-static">
                         <strong class="d-inline-block mb-2 text-primary">Map actuelle</strong>
-                        <h3 class="mb-0"><?= (!is_null($status->map))?$status->map->getName():"-";?></h3>
-                        <p class="card-text mb-auto"><?= (!is_null($status->map))?$status->map->getDescription():"-";?></p>
+                        <h3 class="mb-0 map-name"><?= (!is_null($status->map))?$status->map->getName():"-";?></h3>
+                        <p class="card-text mb-auto text-muted">
+                            <small>
+                                <strong>Durée de la partie: </strong> <span class="timelimit-status"><?= $status->cvars['timelimit'];?></span> min<br/>
+                                <strong>Durée du round: </strong> <span class="roundtime-status"><?= $status->cvars['g_roundtime'];?></span> min
+                            </small>
+                        </p>
                     </div>
                     <div class="col-auto d-none d-lg-block">
                         <?php
@@ -24,8 +29,8 @@ include('header.php');
                 <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
                     <div class="col p-4 d-flex flex-column position-static">
                         <strong class="d-inline-block mb-2 text-primary">Mode de jeu</strong>
-                        <h3 class="mb-0"><?= (!is_null($status->gametype))?$status->gametype->getName():"-";?></h3>
-                        <p class="card-text mb-auto text-muted"><?= (!is_null($status->gametype))?$status->gametype->getDescription():"-";?></p>
+                        <h3 class="mb-0 gametype-name"><?= (!is_null($status->gametype))?$status->gametype->getName():"-";?></h3>
+                        <p class="card-text mb-auto text-muted gametype-description"><?= (!is_null($status->gametype))?$status->gametype->getDescription():"-";?></p>
                     </div>
                 </div>
             </div>

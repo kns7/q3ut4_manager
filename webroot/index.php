@@ -123,13 +123,15 @@ if($app->Ctrl->Auth->isauth()){
             $app->response->setStatus(200);
             $app->response()->headers->set('Content-Type', 'application/json; charset=utf-8');
             $status = $app->Ctrl->RCON->getStatus();
+            $players = $app->Ctrl->RCON->getPlayers();
             echo json_encode((object)[
                 "mapname" => $status->map->getName(),
                 "mapimg" => $status->map->getImg(),
                 "timelimit" => $status->cvars["timelimit"],
                 "roundtime" => $status->cvars["g_roundtime"],
                 "gametypename" => $status->gametype->getName(),
-                "gametypedescription" => $status->gametype->getDescription()
+                "gametypedescription" => $status->gametype->getDescription(),
+                "players" => $players
             ]);
 
         });
@@ -167,6 +169,17 @@ if($app->getMode() == "development"){
             echo "<pre>";
             var_dump($app->Ctrl->RCON->getCvarList());
             echo "</pre>";
+        });
+
+        $app->get('/blabla',function() use($app){
+            $app->Ctrl->RCON->sendMessage("Salut");
+            sleep(1);
+            $app->Ctrl->RCON->sendMessage("Comment");
+            sleep(1);
+            $app->Ctrl->RCON->sendMessage("ca");
+            sleep(1);
+            $app->Ctrl->RCON->sendMessage("va");
+            sleep(1);
         });
 
         $app->get('/players',function() use($app){

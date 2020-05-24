@@ -12,7 +12,7 @@
                     <label for="map" class="col-sm-4 col-form-label">Carte</label>
                     <div class="col-sm-2"><img class="map-preview" src="<?= (!is_null($actual['map']))?$actual['map']->getImg():"/maps/unknown.jpg";?>"/></div>
                     <div class="col-sm-6">
-                        <select class="form-control" id="map">
+                        <select class="form-control" id="map" data-changes="0">
                         <?php
                         foreach($maps as $map){
                             ?><option value="<?= $map->getId();?>" data-img="<?=$map->getImg();?>" <?=($map->getFile() == $cvars['mapname'])?"selected":"";?>><?= $map->getName();?></option><?php
@@ -24,7 +24,7 @@
                 <div class="form-group row">
                     <label for="gametype" class="col-sm-4 col-form-label">Mode de jeu</label>
                     <div class="col-sm-8">
-                        <select id="gametype" class="form-control">
+                        <select id="gametype" class="form-control" data-changes="0">
                             <?php
                             foreach($gametypes as $gametype){
                                 ?><option value="<?= $gametype->getId();?>" <?=($gametype->getCode() == $cvars['g_gametype'])?"selected":"";?>><?= $gametype->getName();?></option><?php
@@ -39,7 +39,7 @@
                     <label for="timelimit" class="col-sm-4 col-form-label">Dur&eacute;e de la partie</label>
                     <div class="col-sm-8">
                         <div class="input-group">
-                            <input class="form-control" id="timelimit" placeholder="10" value="<?=$cvars["timelimit"];?>"/>
+                            <input class="form-control" id="timelimit" placeholder="10" value="<?=$cvars["timelimit"];?>" data-changes="0"/>
                             <div class="input-group-append"><span class="input-group-text">min</span></div>
                         </div>
                     </div>
@@ -48,7 +48,7 @@
                     <label for="roundtime" class="col-sm-4 col-form-label">Dur&eacute;e d'un round</label>
                     <div class="col-sm-8">
                         <div class="input-group">
-                            <input class="form-control" id="roundtime" placeholder="10" value="<?=$cvars["g_roundtime"];?>"/>
+                            <input class="form-control" id="roundtime" placeholder="10" value="<?=$cvars["g_roundtime"];?>" data-changes="0"/>
                             <div class="input-group-append"><span class="input-group-text">min</span></div>
                         </div>
                     </div>

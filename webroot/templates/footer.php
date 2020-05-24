@@ -28,7 +28,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-outline-dark" data-dismiss="modal"><i class="fa fa-times"></i> Non, pas vraiment...</button>
-                <button type="button" class="btn btn-outline-success btn-reload"><i class="fa fa-check"></i> C'est parti !</button>
+                <button type="button" class="btn btn-outline-success btn-reload-confirm"><i class="fa fa-check"></i> C'est parti !</button>
             </div>
         </div>
     </div>
