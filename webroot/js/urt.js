@@ -93,13 +93,10 @@ $(document).ready(function(){
            var data = {};
            $(".form-settings .form-control").each(function(){
                if($(this).attr('data-changes') == "1"){
-                   if($(this).attr('id') == "reload"){
-                       data[$(this).attr('id')] = document.getElementById('reload').checked;
-                   }else{
-                       data[$(this).attr('id')] = $(this).val();
-                   }
+                   data[$(this).attr('id')] = $(this).val();
                }
            });
+           data["reload"] = document.getElementById('reload').checked;
            $("#settings").modal("hide");
            $.ajax({
                method: "POST",
