@@ -5,4 +5,4 @@
 Simplistic Web Interface to manage Urban Terror Servers
 
 ## Version
-1.1.4
+1.1.5
