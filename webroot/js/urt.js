@@ -93,7 +93,11 @@ $(document).ready(function(){
            var data = {};
            $(".form-settings .form-control").each(function(){
                if($(this).attr('data-changes') == "1"){
-                   data[$(this).attr('id')] = $(this).val();
+                   if($(this).attr('id') == "reload"){
+                       data[$(this).attr('id')] = document.getElementById('reload').checked;
+                   }else{
+                       data[$(this).attr('id')] = $(this).val();
+                   }
                }
            });
            $("#settings").modal("hide");
