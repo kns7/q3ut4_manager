@@ -59,6 +59,15 @@
 select#map.form-control {
     margin-top: 26px;
 }
+.map-big {
+    color: #78009b;
+}
+.map-normal {
+    color: #00139b;
+}
+.map-small {
+    color: #00939b;
+}
 .map-preview {
     max-height: 90px;
 }
