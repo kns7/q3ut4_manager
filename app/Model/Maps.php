@@ -27,4 +27,9 @@ class Maps extends BaseMaps
 
         }
     }
+
+    public function getNameSize()
+    {
+        return $this->getName() . (empty($this->getSize()))?"":" (".$this->getSize().")";
+    }
 }

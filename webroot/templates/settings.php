@@ -15,7 +15,28 @@
                         <select class="form-control" id="map" data-changes="0">
                         <?php
                         foreach($maps as $map){
-                            ?><option value="<?= $map->getId();?>" data-img="<?=$map->getImg();?>" <?=($map->getFile() == $cvars['mapname'])?"selected":"";?>><?= $map->getName();?></option><?php
+                            switch($map->getSize()){
+                                default:
+                                    $class = "";
+                                    break;
+                                case "XS":
+                                case "S":
+                                    $class = "map-small";
+                                    break;
+
+                                case "M":
+                                    $class = "map-normal";
+                                    break;
+
+                                case "L":
+                                    case "XL";
+                                    $class = "map-big";
+                                    break;
+
+                            }
+                            ?><option class="<?= $class;?> "value="<?= $map->getId();?>" data-img="<?=$map->getImg();?>" <?=($map->getFile() == $cvars['mapname'])?"selected":"";?>>
+                            <?= $map->getName();?><?= (empty($map->getSize()))?"":" (".$map->getSize().")";?>
+                            </option><?php
                         }
                         ?>
                         </select>

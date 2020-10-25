@@ -19,6 +19,7 @@ function reloadStatus(){
         success: function(datas,status){
             $(".map-img").attr('src',datas.mapimg);
             $(".map-name").text(datas.mapname);
+            $(".map-size").text(datas.mapsize);
             $(".timelimit-status").text(datas.timelimit);
             $(".roundtime-status").text(datas.roundtime);
             $(".gametype-name").text(datas.gametypename)
@@ -110,5 +111,56 @@ $(document).ready(function(){
                }
            })
        })
-});
+       .on("click",".map-item",function(e){
+            e.preventDefault();
+            $(this).toggleClass("active");
+            if($(".map-item.active").length > 0){
+                $(".btn-add-map").prop("disabled",false)
+            }else{
+                $(".btn-add-map").prop("disabled",true)
+            }
+        })
 
+       .on('click','.btn-add-map',function(e){
+           $(".map-item.active").each(function(e){
+               var content = "<li class='list-group-item mapcycle-item' data-id='"+$(this).attr('data-id')+"' draggable='true'>"+$(this).html()+"<div class='btn btn-xs btn-outline-danger btn-remove-map'><i class='fa fa-trash-alt'></i></div></li>";
+               $("#mapcycle").append(content);
+               $(this).removeClass("active");
+               $('.list-group-sortable').sortable({
+                   placeholderClass: 'list-group-item'
+               })
+           })
+       })
+       .on("click",'.btn-remove-map',function(e){
+            $(this).parent().remove()
+       })
+       .on('click','.btn-savemapcycle',function(e){
+           e.preventDefault();
+           e.stopPropagation();
+           loader(true,true);
+           maps = [];
+           $(".mapcycle-item").each(function(e){
+               maps.push($(this).attr('data-id'))
+           })
+           data = {
+               "maps": maps
+           }
+           $.ajax({
+               method: "POST",
+               url: "/ajax/action/mapcycleEdit",
+               data: data,
+               success: function(d){
+                   loader(false);
+                   window.location.href="/"
+               },
+               error: function(d){
+                   loader(false);
+               }
+           })
+       })
+
+
+        $('.list-group-sortable').sortable({
+            placeholderClass: 'list-group-item'
+        })
+});

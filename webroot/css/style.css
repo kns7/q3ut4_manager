@@ -35,7 +35,7 @@
 }
 
 .map-img {
-    max-height: 165px;
+    max-height: 185px;
 }
 
 .table-hover tbody tr:hover {
@@ -59,11 +59,44 @@
 select#map.form-control {
     margin-top: 26px;
 }
+.map-big {
+    color: #78009b;
+}
+.map-normal {
+    color: #00139b;
+}
+.map-small {
+    color: #00939b;
+}
 .map-preview {
     max-height: 90px;
 }
 .hidden {
     display:none;
+}
+
+#maplist, #mapcycle{
+    height: 80vh;
+    overflow: auto;
+}
+
+.mapcycle-item {
+    position: relative;
+}
+.mapcycle-item .btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+.mapcycle-editor li:hover {
+    background-color: rgba(255,145,0,0.5);
+    cursor: pointer;
+}
+
+.mapcycle-editor li img {
+    height: 40px;
+    margin-right: 10px;
 }
 
 @media (max-width: 576px) {

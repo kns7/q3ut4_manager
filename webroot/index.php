@@ -134,6 +134,12 @@ if($app->Ctrl->Auth->isauth()){
         $app->redirect($app->urlFor('login'));
     });
 
+    $app->get('/mapcycle-editor',function() use($app){
+        $maps = $app->Ctrl->Maps->getList();
+        $mapcycle = $app->Ctrl->Maps->getMapCycle();
+        $app->render('mapcycle-editor.php',compact('app','maps','mapcycle'));
+    });
+
     // Ajax Requests
     $app->group('/ajax',function() use($app){
         $app->get('/settings',function() use($app){
@@ -160,6 +166,7 @@ if($app->Ctrl->Auth->isauth()){
             echo json_encode((object)[
                 "mapname" => $status->map->getName(),
                 "mapimg" => $status->map->getImg(),
+                "mapsize" => $status->map->getSize(),
                 "timelimit" => $status->cvars["timelimit"],
                 "roundtime" => $status->cvars["g_roundtime"],
                 "gametypename" => $status->gametype->getName(),
@@ -179,6 +186,12 @@ if($app->Ctrl->Auth->isauth()){
                 $app->response()->headers->set('Content-Type', 'application/json; charset=utf-8');
                 echo json_encode($app->Ctrl->RCON->saveParams($_POST));
             });
+
+            $app->post('/mapcycleEdit',function() use($app){
+                $app->response->setStatus(200);
+                $app->response()->headers->set('Content-Type','application/json; charset=utf-8');
+                $app->Ctrl->Maps->setMapCycle($_POST['maps']);
+            });
         });
     });
 }
@@ -189,6 +202,12 @@ if($app->getMode() == "development"){
     $app->group('/test',function() use($app){
         $app->get('/getMap', function() use($app){
             $app->Ctrl->RCON->getMap();
+        });
+
+        $app->get('/getMapCycle',function() use($app){
+            echo "<pre>";
+            var_dump($app->Ctrl->Maps->getMapCycle());
+            echo "</pre>";
         });
 
         $app->get('/config',function() use($app){

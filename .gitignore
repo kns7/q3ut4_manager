@@ -19,7 +19,7 @@ propel.yml
 .idea/
 
 # Content
-maps/
+webroot/maps/
 
 # Local Dev
 tmp/

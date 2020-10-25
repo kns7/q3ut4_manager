@@ -58,7 +58,7 @@ class MapsTableMap extends TableMap
     /**
      * The total number of columns
      */
-    const NUM_COLUMNS = 5;
+    const NUM_COLUMNS = 6;
 
     /**
      * The number of lazy-loaded columns
@@ -68,7 +68,7 @@ class MapsTableMap extends TableMap
     /**
      * The number of columns to hydrate (NUM_COLUMNS - NUM_LAZY_LOAD_COLUMNS)
      */
-    const NUM_HYDRATE_COLUMNS = 5;
+    const NUM_HYDRATE_COLUMNS = 6;
 
     /**
      * the column name for the id field
@@ -96,6 +96,11 @@ class MapsTableMap extends TableMap
     const COL_DESCRIPTION = 'maps.description';
 
     /**
+     * the column name for the size field
+     */
+    const COL_SIZE = 'maps.size';
+
+    /**
      * The default string format for model objects of the related table
      */
     const DEFAULT_STRING_FORMAT = 'YAML';
@@ -107,11 +112,11 @@ class MapsTableMap extends TableMap
      * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
      */
     protected static $fieldNames = array (
-        self::TYPE_PHPNAME       => array('Id', 'File', 'Name', 'Imgurl', 'Description', ),
-        self::TYPE_CAMELNAME     => array('id', 'file', 'name', 'imgurl', 'description', ),
-        self::TYPE_COLNAME       => array(MapsTableMap::COL_ID, MapsTableMap::COL_FILE, MapsTableMap::COL_NAME, MapsTableMap::COL_IMGURL, MapsTableMap::COL_DESCRIPTION, ),
-        self::TYPE_FIELDNAME     => array('id', 'file', 'name', 'imgurl', 'description', ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, )
+        self::TYPE_PHPNAME       => array('Id', 'File', 'Name', 'Imgurl', 'Description', 'Size', ),
+        self::TYPE_CAMELNAME     => array('id', 'file', 'name', 'imgurl', 'description', 'size', ),
+        self::TYPE_COLNAME       => array(MapsTableMap::COL_ID, MapsTableMap::COL_FILE, MapsTableMap::COL_NAME, MapsTableMap::COL_IMGURL, MapsTableMap::COL_DESCRIPTION, MapsTableMap::COL_SIZE, ),
+        self::TYPE_FIELDNAME     => array('id', 'file', 'name', 'imgurl', 'description', 'size', ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, )
     );
 
     /**
@@ -121,11 +126,11 @@ class MapsTableMap extends TableMap
      * e.g. self::$fieldKeys[self::TYPE_PHPNAME]['Id'] = 0
      */
     protected static $fieldKeys = array (
-        self::TYPE_PHPNAME       => array('Id' => 0, 'File' => 1, 'Name' => 2, 'Imgurl' => 3, 'Description' => 4, ),
-        self::TYPE_CAMELNAME     => array('id' => 0, 'file' => 1, 'name' => 2, 'imgurl' => 3, 'description' => 4, ),
-        self::TYPE_COLNAME       => array(MapsTableMap::COL_ID => 0, MapsTableMap::COL_FILE => 1, MapsTableMap::COL_NAME => 2, MapsTableMap::COL_IMGURL => 3, MapsTableMap::COL_DESCRIPTION => 4, ),
-        self::TYPE_FIELDNAME     => array('id' => 0, 'file' => 1, 'name' => 2, 'imgurl' => 3, 'description' => 4, ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, )
+        self::TYPE_PHPNAME       => array('Id' => 0, 'File' => 1, 'Name' => 2, 'Imgurl' => 3, 'Description' => 4, 'Size' => 5, ),
+        self::TYPE_CAMELNAME     => array('id' => 0, 'file' => 1, 'name' => 2, 'imgurl' => 3, 'description' => 4, 'size' => 5, ),
+        self::TYPE_COLNAME       => array(MapsTableMap::COL_ID => 0, MapsTableMap::COL_FILE => 1, MapsTableMap::COL_NAME => 2, MapsTableMap::COL_IMGURL => 3, MapsTableMap::COL_DESCRIPTION => 4, MapsTableMap::COL_SIZE => 5, ),
+        self::TYPE_FIELDNAME     => array('id' => 0, 'file' => 1, 'name' => 2, 'imgurl' => 3, 'description' => 4, 'size' => 5, ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, )
     );
 
     /**
@@ -150,6 +155,7 @@ class MapsTableMap extends TableMap
         $this->addColumn('name', 'Name', 'VARCHAR', true, 255, null);
         $this->addColumn('imgurl', 'Imgurl', 'VARCHAR', false, 255, null);
         $this->addColumn('description', 'Description', 'LONGVARCHAR', false, null, null);
+        $this->addColumn('size', 'Size', 'VARCHAR', false, 3, null);
     } // initialize()
 
     /**
@@ -305,12 +311,14 @@ class MapsTableMap extends TableMap
             $criteria->addSelectColumn(MapsTableMap::COL_NAME);
             $criteria->addSelectColumn(MapsTableMap::COL_IMGURL);
             $criteria->addSelectColumn(MapsTableMap::COL_DESCRIPTION);
+            $criteria->addSelectColumn(MapsTableMap::COL_SIZE);
         } else {
             $criteria->addSelectColumn($alias . '.id');
             $criteria->addSelectColumn($alias . '.file');
             $criteria->addSelectColumn($alias . '.name');
             $criteria->addSelectColumn($alias . '.imgurl');
             $criteria->addSelectColumn($alias . '.description');
+            $criteria->addSelectColumn($alias . '.size');
         }
     }
 

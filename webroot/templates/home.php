@@ -12,7 +12,8 @@ include('header.php');
                         <p class="card-text mb-auto text-muted">
                             <small>
                                 <strong>Durée de la partie: </strong> <span class="timelimit-status"><?= $status->cvars['timelimit'];?></span> min<br/>
-                                <strong>Durée du round: </strong> <span class="roundtime-status"><?= $status->cvars['g_roundtime'];?></span> min
+                                <strong>Durée du round: </strong> <span class="roundtime-status"><?= $status->cvars['g_roundtime'];?></span> min<br/>
+                                <strong>Taille de la carte: </strong> <span class="map-size"><?= $status->map->getSize();?></span>
                             </small>
                         </p>
                     </div>
@@ -70,6 +71,7 @@ include('header.php');
     </div>
     <div class="col-md-3 col-sm-10 offset-md-0 offset-sm-2 mb-4">
         <button type="button" class="btn btn-block btn-light btn-settings"><i class="fa fa-cogs"></i> Paramètres</button>
+        <a type="button" class="btn btn-block btn-light" href="/mapcycle-editor"><i class="fas fa-list-ol"></i> Editer le MapCycle</a>
         <button type="button" class="btn btn-block btn-light btn-reload"><i class="fa fa-sync-alt"></i> Recharger le serveur</button>
     </div>
 </div>
