@@ -160,6 +160,7 @@ if($app->Ctrl->Auth->isauth()){
             echo json_encode((object)[
                 "mapname" => $status->map->getName(),
                 "mapimg" => $status->map->getImg(),
+                "mapsize" => $status->map->getSize(),
                 "timelimit" => $status->cvars["timelimit"],
                 "roundtime" => $status->cvars["g_roundtime"],
                 "gametypename" => $status->gametype->getName(),

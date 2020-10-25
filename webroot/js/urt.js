@@ -19,6 +19,7 @@ function reloadStatus(){
         success: function(datas,status){
             $(".map-img").attr('src',datas.mapimg);
             $(".map-name").text(datas.mapname);
+            $(".map-size").text(datas.mapsize);
             $(".timelimit-status").text(datas.timelimit);
             $(".roundtime-status").text(datas.roundtime);
             $(".gametype-name").text(datas.gametypename)
