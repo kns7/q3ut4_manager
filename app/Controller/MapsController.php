@@ -37,7 +37,9 @@ class MapsController extends Controller
             $file = fopen($this->config->gamepath."/mapcycle.txt","r");
             while(!feof($file)){
                 $map = fgets($file);
-                array_push($mapcycle,$this->getByFile(trim($map)));
+                if(!is_null($map) && !empty($map)){
+                    array_push($mapcycle,$this->getByFile(trim($map)));
+                }
             }
         }
         return $mapcycle;
