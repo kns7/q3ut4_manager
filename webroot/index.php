@@ -134,6 +134,12 @@ if($app->Ctrl->Auth->isauth()){
         $app->redirect($app->urlFor('login'));
     });
 
+    $app->get('/mapcycle-editor',function() use($app){
+        $maps = $app->Ctrl->Maps->getList();
+        $mapcycle = $app->Ctrl->Maps->getMapCycle();
+        $app->render('mapcycle-editor.php',compact('app','maps','mapcycle'));
+    });
+
     // Ajax Requests
     $app->group('/ajax',function() use($app){
         $app->get('/settings',function() use($app){
@@ -190,6 +196,12 @@ if($app->getMode() == "development"){
     $app->group('/test',function() use($app){
         $app->get('/getMap', function() use($app){
             $app->Ctrl->RCON->getMap();
+        });
+
+        $app->get('/getMapCycle',function() use($app){
+            echo "<pre>";
+            var_dump($app->Ctrl->Maps->getMapCycle());
+            echo "</pre>";
         });
 
         $app->get('/config',function() use($app){

@@ -111,5 +111,33 @@ $(document).ready(function(){
                }
            })
        })
+       .on("click",".map-item",function(e){
+            e.preventDefault();
+            $(this).toggleClass("active");
+            if($(".map-item.active").length > 0){
+                $(".btn-add-map").prop("disabled",false)
+            }else{
+                $(".btn-add-map").prop("disabled",true)
+            }
+        })
+
+       .on('click','.btn-add-map',function(e){
+           $(".map-item.active").each(function(e){
+               var content = "<li class='list-group-item mapcycle-item' data-id='"+$(this).attr('data-id')+"' draggable='true'>"+$(this).html()+"<div class='btn btn-xs btn-outline-danger btn-remove-map'><i class='fa fa-trash-alt'></i></div></li>";
+               $("#mapcycle").append(content);
+               $(this).removeClass("active");
+               $('.list-group-sortable').sortable({
+                   placeholderClass: 'list-group-item'
+               })
+           })
+       })
+       .on("click",'.btn-remove-map',function(e){
+            $(this).parent().remove()
+       })
+
+
+        $('.list-group-sortable').sortable({
+            placeholderClass: 'list-group-item'
+        })
 });
 

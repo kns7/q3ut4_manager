@@ -75,6 +75,30 @@ select#map.form-control {
     display:none;
 }
 
+#maplist, #mapcycle{
+    height: 80vh;
+    overflow: auto;
+}
+
+.mapcycle-item {
+    position: relative;
+}
+.mapcycle-item .btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+.mapcycle-editor li:hover {
+    background-color: rgba(255,145,0,0.5);
+    cursor: pointer;
+}
+
+.mapcycle-editor li img {
+    height: 40px;
+    margin-right: 10px;
+}
+
 @media (max-width: 576px) {
     .map-img {
         max-height: 100px;

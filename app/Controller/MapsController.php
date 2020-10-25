@@ -29,4 +29,17 @@ class MapsController extends Controller
     {
         return MapsQuery::create()->findOneByFile($file);
     }
+
+    public function getMapCycle()
+    {
+        $mapcycle = [];
+        if(file_exists($this->config->gamepath."/mapcycle.txt")){
+            $file = fopen($this->config->gamepath."/mapcycle.txt","r");
+            while(!feof($file)){
+                $map = fgets($file);
+                array_push($mapcycle,$this->getByFile(trim($map)));
+            }
+        }
+        return $mapcycle;
+    }
 }
