@@ -22,6 +22,7 @@
     <column name="name" phpName="Name" type="VARCHAR" size="255" required="true"/>
     <column name="imgurl" phpName="Imgurl" type="VARCHAR" size="255"/>
     <column name="description" phpName="Description" type="LONGVARCHAR"/>
+    <column name="size" phpName="Size" type="VARCHAR" size="3"/>
     <vendor type="mysql">
       <parameter name="Engine" value="InnoDB"/>
     </vendor>

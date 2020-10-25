@@ -24,12 +24,14 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildMapsQuery orderByName($order = Criteria::ASC) Order by the name column
  * @method     ChildMapsQuery orderByImgurl($order = Criteria::ASC) Order by the imgurl column
  * @method     ChildMapsQuery orderByDescription($order = Criteria::ASC) Order by the description column
+ * @method     ChildMapsQuery orderBySize($order = Criteria::ASC) Order by the size column
  *
  * @method     ChildMapsQuery groupById() Group by the id column
  * @method     ChildMapsQuery groupByFile() Group by the file column
  * @method     ChildMapsQuery groupByName() Group by the name column
  * @method     ChildMapsQuery groupByImgurl() Group by the imgurl column
  * @method     ChildMapsQuery groupByDescription() Group by the description column
+ * @method     ChildMapsQuery groupBySize() Group by the size column
  *
  * @method     ChildMapsQuery leftJoin($relation) Adds a LEFT JOIN clause to the query
  * @method     ChildMapsQuery rightJoin($relation) Adds a RIGHT JOIN clause to the query
@@ -46,7 +48,8 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildMaps findOneByFile(string $file) Return the first ChildMaps filtered by the file column
  * @method     ChildMaps findOneByName(string $name) Return the first ChildMaps filtered by the name column
  * @method     ChildMaps findOneByImgurl(string $imgurl) Return the first ChildMaps filtered by the imgurl column
- * @method     ChildMaps findOneByDescription(string $description) Return the first ChildMaps filtered by the description column *
+ * @method     ChildMaps findOneByDescription(string $description) Return the first ChildMaps filtered by the description column
+ * @method     ChildMaps findOneBySize(string $size) Return the first ChildMaps filtered by the size column *
 
  * @method     ChildMaps requirePk($key, ConnectionInterface $con = null) Return the ChildMaps by primary key and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildMaps requireOne(ConnectionInterface $con = null) Return the first ChildMaps matching the query and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
@@ -56,6 +59,7 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildMaps requireOneByName(string $name) Return the first ChildMaps filtered by the name column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildMaps requireOneByImgurl(string $imgurl) Return the first ChildMaps filtered by the imgurl column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildMaps requireOneByDescription(string $description) Return the first ChildMaps filtered by the description column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildMaps requireOneBySize(string $size) Return the first ChildMaps filtered by the size column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  *
  * @method     ChildMaps[]|ObjectCollection find(ConnectionInterface $con = null) Return ChildMaps objects based on current ModelCriteria
  * @method     ChildMaps[]|ObjectCollection findById(int $id) Return ChildMaps objects filtered by the id column
@@ -63,6 +67,7 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildMaps[]|ObjectCollection findByName(string $name) Return ChildMaps objects filtered by the name column
  * @method     ChildMaps[]|ObjectCollection findByImgurl(string $imgurl) Return ChildMaps objects filtered by the imgurl column
  * @method     ChildMaps[]|ObjectCollection findByDescription(string $description) Return ChildMaps objects filtered by the description column
+ * @method     ChildMaps[]|ObjectCollection findBySize(string $size) Return ChildMaps objects filtered by the size column
  * @method     ChildMaps[]|\Propel\Runtime\Util\PropelModelPager paginate($page = 1, $maxPerPage = 10, ConnectionInterface $con = null) Issue a SELECT query based on the current ModelCriteria and uses a page and a maximum number of results per page to compute an offset and a limit
  *
  */
@@ -161,7 +166,7 @@ abstract class MapsQuery extends ModelCriteria
      */
     protected function findPkSimple($key, ConnectionInterface $con)
     {
-        $sql = 'SELECT id, file, name, imgurl, description FROM maps WHERE id = :p0';
+        $sql = 'SELECT id, file, name, imgurl, description, size FROM maps WHERE id = :p0';
         try {
             $stmt = $con->prepare($sql);
             $stmt->bindValue(':p0', $key, PDO::PARAM_INT);
@@ -390,6 +395,31 @@ abstract class MapsQuery extends ModelCriteria
         }
 
         return $this->addUsingAlias(MapsTableMap::COL_DESCRIPTION, $description, $comparison);
+    }
+
+    /**
+     * Filter the query on the size column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterBySize('fooValue');   // WHERE size = 'fooValue'
+     * $query->filterBySize('%fooValue%', Criteria::LIKE); // WHERE size LIKE '%fooValue%'
+     * </code>
+     *
+     * @param     string $size The value to use as filter.
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return $this|ChildMapsQuery The current query, for fluid interface
+     */
+    public function filterBySize($size = null, $comparison = null)
+    {
+        if (null === $comparison) {
+            if (is_array($size)) {
+                $comparison = Criteria::IN;
+            }
+        }
+
+        return $this->addUsingAlias(MapsTableMap::COL_SIZE, $size, $comparison);
     }
 
     /**

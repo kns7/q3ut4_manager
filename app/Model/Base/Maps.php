@@ -95,6 +95,13 @@ abstract class Maps implements ActiveRecordInterface
     protected $description;
 
     /**
+     * The value for the size field.
+     *
+     * @var        string
+     */
+    protected $size;
+
+    /**
      * Flag to prevent endless save loop, if this object is referenced
      * by another object which falls in this transaction.
      *
@@ -378,6 +385,16 @@ abstract class Maps implements ActiveRecordInterface
     }
 
     /**
+     * Get the [size] column value.
+     *
+     * @return string
+     */
+    public function getSize()
+    {
+        return $this->size;
+    }
+
+    /**
      * Set the value of [id] column.
      *
      * @param int $v new value
@@ -478,6 +495,26 @@ abstract class Maps implements ActiveRecordInterface
     } // setDescription()
 
     /**
+     * Set the value of [size] column.
+     *
+     * @param string $v new value
+     * @return $this|\Maps The current object (for fluent API support)
+     */
+    public function setSize($v)
+    {
+        if ($v !== null) {
+            $v = (string) $v;
+        }
+
+        if ($this->size !== $v) {
+            $this->size = $v;
+            $this->modifiedColumns[MapsTableMap::COL_SIZE] = true;
+        }
+
+        return $this;
+    } // setSize()
+
+    /**
      * Indicates whether the columns in this object are only set to default values.
      *
      * This method can be used in conjunction with isModified() to indicate whether an object is both
@@ -527,6 +564,9 @@ abstract class Maps implements ActiveRecordInterface
 
             $col = $row[TableMap::TYPE_NUM == $indexType ? 4 + $startcol : MapsTableMap::translateFieldName('Description', TableMap::TYPE_PHPNAME, $indexType)];
             $this->description = (null !== $col) ? (string) $col : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 5 + $startcol : MapsTableMap::translateFieldName('Size', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->size = (null !== $col) ? (string) $col : null;
             $this->resetModified();
 
             $this->setNew(false);
@@ -535,7 +575,7 @@ abstract class Maps implements ActiveRecordInterface
                 $this->ensureConsistency();
             }
 
-            return $startcol + 5; // 5 = MapsTableMap::NUM_HYDRATE_COLUMNS.
+            return $startcol + 6; // 6 = MapsTableMap::NUM_HYDRATE_COLUMNS.
 
         } catch (Exception $e) {
             throw new PropelException(sprintf('Error populating %s object', '\\Maps'), 0, $e);
@@ -751,6 +791,9 @@ abstract class Maps implements ActiveRecordInterface
         if ($this->isColumnModified(MapsTableMap::COL_DESCRIPTION)) {
             $modifiedColumns[':p' . $index++]  = 'description';
         }
+        if ($this->isColumnModified(MapsTableMap::COL_SIZE)) {
+            $modifiedColumns[':p' . $index++]  = 'size';
+        }
 
         $sql = sprintf(
             'INSERT INTO maps (%s) VALUES (%s)',
@@ -776,6 +819,9 @@ abstract class Maps implements ActiveRecordInterface
                         break;
                     case 'description':
                         $stmt->bindValue($identifier, $this->description, PDO::PARAM_STR);
+                        break;
+                    case 'size':
+                        $stmt->bindValue($identifier, $this->size, PDO::PARAM_STR);
                         break;
                 }
             }
@@ -854,6 +900,9 @@ abstract class Maps implements ActiveRecordInterface
             case 4:
                 return $this->getDescription();
                 break;
+            case 5:
+                return $this->getSize();
+                break;
             default:
                 return null;
                 break;
@@ -888,6 +937,7 @@ abstract class Maps implements ActiveRecordInterface
             $keys[2] => $this->getName(),
             $keys[3] => $this->getImgurl(),
             $keys[4] => $this->getDescription(),
+            $keys[5] => $this->getSize(),
         );
         $virtualColumns = $this->virtualColumns;
         foreach ($virtualColumns as $key => $virtualColumn) {
@@ -942,6 +992,9 @@ abstract class Maps implements ActiveRecordInterface
             case 4:
                 $this->setDescription($value);
                 break;
+            case 5:
+                $this->setSize($value);
+                break;
         } // switch()
 
         return $this;
@@ -982,6 +1035,9 @@ abstract class Maps implements ActiveRecordInterface
         }
         if (array_key_exists($keys[4], $arr)) {
             $this->setDescription($arr[$keys[4]]);
+        }
+        if (array_key_exists($keys[5], $arr)) {
+            $this->setSize($arr[$keys[5]]);
         }
     }
 
@@ -1038,6 +1094,9 @@ abstract class Maps implements ActiveRecordInterface
         }
         if ($this->isColumnModified(MapsTableMap::COL_DESCRIPTION)) {
             $criteria->add(MapsTableMap::COL_DESCRIPTION, $this->description);
+        }
+        if ($this->isColumnModified(MapsTableMap::COL_SIZE)) {
+            $criteria->add(MapsTableMap::COL_SIZE, $this->size);
         }
 
         return $criteria;
@@ -1129,6 +1188,7 @@ abstract class Maps implements ActiveRecordInterface
         $copyObj->setName($this->getName());
         $copyObj->setImgurl($this->getImgurl());
         $copyObj->setDescription($this->getDescription());
+        $copyObj->setSize($this->getSize());
         if ($makeNew) {
             $copyObj->setNew(true);
             $copyObj->setId(NULL); // this is a auto-increment column, so set to default value
@@ -1169,6 +1229,7 @@ abstract class Maps implements ActiveRecordInterface
         $this->name = null;
         $this->imgurl = null;
         $this->description = null;
+        $this->size = null;
         $this->alreadyInSave = false;
         $this->clearAllReferences();
         $this->resetModified();
