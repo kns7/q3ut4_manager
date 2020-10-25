@@ -42,4 +42,19 @@ class MapsController extends Controller
         }
         return $mapcycle;
     }
+
+    public function setMapCycle(array $maps){
+        $i=0;
+        foreach($maps as $id){
+            $map = MapsQuery::create()->findPk($id);
+            if(!is_null($map)){
+                if($i == 0){
+                    file_put_contents($this->config->gamepath."/mapcycle.txt",$map->getFile());
+                }else{
+                    file_put_contents($this->config->gamepath."/mapcycle.txt","\n".$map->getFile(),FILE_APPEND);
+                }
+                $i++;
+            }
+        }
+    }
 }

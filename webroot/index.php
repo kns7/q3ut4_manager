@@ -186,6 +186,12 @@ if($app->Ctrl->Auth->isauth()){
                 $app->response()->headers->set('Content-Type', 'application/json; charset=utf-8');
                 echo json_encode($app->Ctrl->RCON->saveParams($_POST));
             });
+
+            $app->post('/mapcycleEdit',function() use($app){
+                $app->response->setStatus(200);
+                $app->response()->headers->set('Content-Type','application/json; charset=utf-8');
+                $app->Ctrl->Maps->setMapCycle($_POST['maps']);
+            });
         });
     });
 }

@@ -134,6 +134,30 @@ $(document).ready(function(){
        .on("click",'.btn-remove-map',function(e){
             $(this).parent().remove()
        })
+       .on('click','.btn-savemapcycle',function(e){
+           e.preventDefault();
+           e.stopPropagation();
+           loader(true,true);
+           maps = [];
+           $(".mapcycle-item").each(function(e){
+               maps.push($(this).attr('data-id'))
+           })
+           data = {
+               "maps": maps
+           }
+           $.ajax({
+               method: "POST",
+               url: "/ajax/action/mapcycleEdit",
+               data: data,
+               success: function(d){
+                   loader(false);
+                   window.location.href="/"
+               },
+               error: function(d){
+                   loader(false);
+               }
+           })
+       })
 
 
         $('.list-group-sortable').sortable({

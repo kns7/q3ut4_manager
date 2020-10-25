@@ -71,6 +71,7 @@ include('header.php');
     </div>
     <div class="col-md-3 col-sm-10 offset-md-0 offset-sm-2 mb-4">
         <button type="button" class="btn btn-block btn-light btn-settings"><i class="fa fa-cogs"></i> Paramètres</button>
+        <a type="button" class="btn btn-block btn-light" href="/mapcycle-editor"><i class="fas fa-list-ol"></i> Editer le MapCycle</a>
         <button type="button" class="btn btn-block btn-light btn-reload"><i class="fa fa-sync-alt"></i> Recharger le serveur</button>
     </div>
 </div>
