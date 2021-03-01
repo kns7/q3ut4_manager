@@ -19,4 +19,4 @@ It is now possible to edit the Map Cycle online.
 For this, the file "mapcycle.txt" needs to be writable from the Web User (usually www-data) 
 
 ## Version
-1.2.3
+1.2.4
