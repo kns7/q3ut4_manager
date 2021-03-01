@@ -10,8 +10,11 @@
     <link rel="icon" href="/favicon_48.png" sizes="48x48">
     <link rel="icon" href="/favicon_64.png" sizes="64x64">
     <link rel="icon" href="/favicon_72.png" sizes="72x72">
-    <link rel="icon" href="/favicon_128.png" sizes="128x128">
-    <link rel="apple-touch-icon" href="/favicon_48.png" />
+    <link rel="icon" href="/favicon_150.png" sizes="150x150">
+    <link rel="icon" href="/favicon_160.png" sizes="160x160">
+    <link rel="icon" href="/favicon_180.png" sizes="180x180">
+    <link rel="icon" href="/favicon_192.png" sizes="192x192">
+    <link rel="apple-touch-icon" href="/favicon_180.png" />
     <link rel="stylesheet" type="text/css" href="/css/vendors.min.css">
     <link rel="stylesheet" type="text/css" href="/css/style.css">
     <script type="text/javascript" src="/js/jquery.min.js"></script>
