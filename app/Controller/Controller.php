@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use Longman\TelegramBot\Telegram;
+
 class Controller{
     protected $app;
     protected $config;
@@ -32,11 +34,13 @@ class Controller{
     public function sendNotificationTelegram($text)
     {
         $apiToken = $this->config->telegramtoken;
+        $botName = "urt12s_bot";
+
         $data = [
             'chat_id' => $this->config->telegramchannel,
             'text' => $text,
-            'parse_mode' => 'Markdown'
         ];
+
         return file_get_contents("https://api.telegram.org/bot$apiToken/sendMessage?" . http_build_query($data) );
     }
 }
