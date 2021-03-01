@@ -9,6 +9,7 @@
     <link rel="icon" href="/favicon_32.png" sizes="32x32">
     <link rel="icon" href="/favicon_48.png" sizes="48x48">
     <link rel="icon" href="/favicon_64.png" sizes="64x64">
+    <link rel="icon" href="/favicon_72.png" sizes="72x72">
     <link rel="icon" href="/favicon_128.png" sizes="128x128">
     <link rel="apple-touch-icon" href="/favicon_48.png" />
     <link rel="stylesheet" type="text/css" href="/css/vendors.min.css">

@@ -10,7 +10,8 @@
     ],
     "require": {
     	"propel/propel": "~2.0@dev",
-        "slim/slim": "2.*"
+        "slim/slim": "2.*",
+        "longman/telegram-bot": "*"
     },
     "autoload": {
 	    "classmap": ["app/Model","app/Controller"]
