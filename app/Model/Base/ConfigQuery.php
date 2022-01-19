@@ -33,11 +33,11 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildConfigQuery rightJoinWith($relation) Adds a RIGHT JOIN clause and with to the query
  * @method     ChildConfigQuery innerJoinWith($relation) Adds a INNER JOIN clause and with to the query
  *
- * @method     ChildConfig findOne(ConnectionInterface $con = null) Return the first ChildConfig matching the query
+ * @method     ChildConfig|null findOne(ConnectionInterface $con = null) Return the first ChildConfig matching the query
  * @method     ChildConfig findOneOrCreate(ConnectionInterface $con = null) Return the first ChildConfig matching the query, or a new ChildConfig object populated from the query conditions when no match is found
  *
- * @method     ChildConfig findOneByKey(string $key) Return the first ChildConfig filtered by the key column
- * @method     ChildConfig findOneByValue(string $value) Return the first ChildConfig filtered by the value column *
+ * @method     ChildConfig|null findOneByKey(string $key) Return the first ChildConfig filtered by the key column
+ * @method     ChildConfig|null findOneByValue(string $value) Return the first ChildConfig filtered by the value column *
 
  * @method     ChildConfig requirePk($key, ConnectionInterface $con = null) Return the ChildConfig by primary key and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildConfig requireOne(ConnectionInterface $con = null) Return the first ChildConfig matching the query and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
@@ -46,9 +46,13 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildConfig requireOneByValue(string $value) Return the first ChildConfig filtered by the value column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  *
  * @method     ChildConfig[]|ObjectCollection find(ConnectionInterface $con = null) Return ChildConfig objects based on current ModelCriteria
+ * @psalm-method ObjectCollection&\Traversable<ChildConfig> find(ConnectionInterface $con = null) Return ChildConfig objects based on current ModelCriteria
  * @method     ChildConfig[]|ObjectCollection findByKey(string $key) Return ChildConfig objects filtered by the key column
+ * @psalm-method ObjectCollection&\Traversable<ChildConfig> findByKey(string $key) Return ChildConfig objects filtered by the key column
  * @method     ChildConfig[]|ObjectCollection findByValue(string $value) Return ChildConfig objects filtered by the value column
+ * @psalm-method ObjectCollection&\Traversable<ChildConfig> findByValue(string $value) Return ChildConfig objects filtered by the value column
  * @method     ChildConfig[]|\Propel\Runtime\Util\PropelModelPager paginate($page = 1, $maxPerPage = 10, ConnectionInterface $con = null) Issue a SELECT query based on the current ModelCriteria and uses a page and a maximum number of results per page to compute an offset and a limit
+ * @psalm-method \Propel\Runtime\Util\PropelModelPager&\Traversable<ChildConfig> paginate($page = 1, $maxPerPage = 10, ConnectionInterface $con = null) Issue a SELECT query based on the current ModelCriteria and uses a page and a maximum number of results per page to compute an offset and a limit
  *
  */
 abstract class ConfigQuery extends ModelCriteria
@@ -243,9 +247,10 @@ abstract class ConfigQuery extends ModelCriteria
      * <code>
      * $query->filterByKey('fooValue');   // WHERE key = 'fooValue'
      * $query->filterByKey('%fooValue%', Criteria::LIKE); // WHERE key LIKE '%fooValue%'
+     * $query->filterByKey(['foo', 'bar']); // WHERE key IN ('foo', 'bar')
      * </code>
      *
-     * @param     string $key The value to use as filter.
+     * @param     string|string[] $key The value to use as filter.
      * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
      *
      * @return $this|ChildConfigQuery The current query, for fluid interface
@@ -268,9 +273,10 @@ abstract class ConfigQuery extends ModelCriteria
      * <code>
      * $query->filterByValue('fooValue');   // WHERE value = 'fooValue'
      * $query->filterByValue('%fooValue%', Criteria::LIKE); // WHERE value LIKE '%fooValue%'
+     * $query->filterByValue(['foo', 'bar']); // WHERE value IN ('foo', 'bar')
      * </code>
      *
-     * @param     string $value The value to use as filter.
+     * @param     string|string[] $value The value to use as filter.
      * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
      *
      * @return $this|ChildConfigQuery The current query, for fluid interface

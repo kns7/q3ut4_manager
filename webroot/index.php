@@ -13,24 +13,32 @@ session_start();
 require "../vendor/autoload.php";
 
 // MySQL Configuration / Connection
-$serviceContainer = Propel::getServiceContainer();
-$serviceContainer->checkVersion('2.0.0-dev');
+$serviceContainer = \Propel\Runtime\Propel::getServiceContainer();
+$serviceContainer->checkVersion(2);
 $serviceContainer->setAdapterClass('default', 'mysql');
-$manager = new ConnectionManagerSingle();
+$manager = new \Propel\Runtime\Connection\ConnectionManagerSingle();
 $manager->setConfiguration(array (
-    'classname' => 'Propel\\Runtime\\Connection\\DebugPDO',
     'dsn' => 'mysql:host='.$_SERVER['MYSQL_HOST'].';port='.$_SERVER['MYSQL_PORT'].';dbname='.$_SERVER['MYSQL_DB'],
     'user' => $_SERVER['MYSQL_USER'],
     'password' => $_SERVER['MYSQL_PASSWORD'],
     'settings' =>
         array (
-            'charset' => 'utf8'
-        )
+            'charset' => 'utf8',
+            'queries' =>
+                array (
+                ),
+        ),
+    'classname' => '\\Propel\\Runtime\\Connection\\ConnectionWrapper',
+    'model_paths' =>
+        array (
+            0 => 'src',
+            1 => 'vendor',
+        ),
 ));
 $manager->setName('default');
 $serviceContainer->setConnectionManager('default', $manager);
 $serviceContainer->setDefaultDatasource('default');
-
+require_once __DIR__ . '/../app/config/loadDatabase.php';
 
 $sitemode = (isset($_SERVER['SITE_MODE']))?$_SERVER['SITE_MODE']:'production';
 
@@ -152,6 +160,7 @@ if($app->Ctrl->Auth->isauth()){
             ];
             $app->render('settings.php',compact('app','maps','gametypes','cvars','actual'));
         });
+
         $app->get('/gametype-desc/:id',function($id) use($app){
             $gametype = $app->Ctrl->Gametypes->get($id);
             if(!is_null($gametype)){
@@ -192,6 +201,12 @@ if($app->Ctrl->Auth->isauth()){
                 $app->response()->headers->set('Content-Type','application/json; charset=utf-8');
                 $app->Ctrl->Maps->setMapCycle($_POST['maps']);
             });
+
+            $app->post('/darkmode/:status',function($status) use($app){
+                $app->response->setStatus(200);
+                $app->response()->headers->set('Content-Type','application/json; charset=utf-8');
+                echo json_encode($app->Ctrl->Maps->setDarkmode($status));
+            });
         });
     });
 }
@@ -231,6 +246,12 @@ if($app->getMode() == "development"){
             sleep(1);
             $app->Ctrl->RCON->sendMessage("va");
             sleep(1);
+        });
+
+        $app->get('/session',function() use($app){
+            echo "<pre>";
+            var_dump($_SESSION);
+            echo "</pre>";
         });
 
         $app->get('/players',function() use($app){

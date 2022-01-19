@@ -25,6 +25,12 @@ class GametypesController extends Controller
         return GametypesQuery::create()->findPk($id);
     }
 
+
+    /**
+     * Get a Gametype by Code (value of g_gametype)
+     * @param $code
+     * @return \Gametypes
+     */
     public function getByCode($code)
     {
         return GametypesQuery::create()->findOneByCode($code);

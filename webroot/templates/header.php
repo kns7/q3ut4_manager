@@ -17,6 +17,18 @@
     <link rel="apple-touch-icon" href="/favicon_180.png" />
     <link rel="stylesheet" type="text/css" href="/css/vendors.min.css">
     <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <?php
+    if(isset($_SESSION['darkmode'])){
+        if($_SESSION['darkmode'] == 1){
+            $btnmode = "btn-dark";
+            $btnoutline = "btn-outline-light";
+            ?><link rel="stylesheet" type="text/css" href="/css/dark.css"><?php
+        }else{
+            $btnmode = "btn-light";
+            $btnoutline = "btn-outline-dark";
+        }
+    }
+    ?>
     <script type="text/javascript" src="/js/jquery.min.js"></script>
     <script type="text/javascript" src="/js/vendors.min.js"></script>
     <script type="text/javascript" src="/js/urt.js"></script>
@@ -32,7 +44,10 @@
         <ul class="navbar-nav mr-auto"></ul>
         <ul class="navbar-nav">
             <li class="nav-item">
-                <a class="nav-link" href="https://urt.12salopards.fr"><i class="fas fa-chart-line"></i> Stats</a>
+                <a class="nav-link darkmode" href="#" data-dark="<?=($_SESSION['darkmode'] == 1)?"0":"1";?>"><i class="<?= ($_SESSION['darkmode'] == 1)?"far fa-sun":"fas fa-moon";?>"></i></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="<?= $app->Ctrl->Maps->getConfigKey("urlstats");?>"><i class="fas fa-chart-line"></i> Stats</a>
             <li class="nav-item">
                 <a class="nav-link" href="/logout"><i class="fas fa-sign-out-alt"></i> Déconnexion</a>
             </li>

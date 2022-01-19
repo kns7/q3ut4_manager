@@ -2,8 +2,6 @@
 
 namespace App\Controller;
 
-use Longman\TelegramBot\Telegram;
-
 class Controller{
     protected $app;
     protected $config;
@@ -31,6 +29,11 @@ class Controller{
         return $this->config;
     }
 
+    public function getConfigKey($key)
+    {
+        return $this->config->$key;
+    }
+
     public function sendNotificationTelegram($text)
     {
         $apiToken = $this->config->telegramtoken;
@@ -42,5 +45,17 @@ class Controller{
         ];
 
         return file_get_contents("https://api.telegram.org/bot$apiToken/sendMessage?" . http_build_query($data) );
+    }
+
+    /**
+     * Set Dark Theme or Light Theme (1: Dark, 0: Light)
+     * @param $status
+     * @return mixed
+     */
+    public function setDarkmode($status)
+    {
+        $_SESSION['darkmode'] = $status;
+
+        return $status;
     }
 }

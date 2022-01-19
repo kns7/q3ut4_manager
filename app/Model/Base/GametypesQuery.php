@@ -37,13 +37,13 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildGametypesQuery rightJoinWith($relation) Adds a RIGHT JOIN clause and with to the query
  * @method     ChildGametypesQuery innerJoinWith($relation) Adds a INNER JOIN clause and with to the query
  *
- * @method     ChildGametypes findOne(ConnectionInterface $con = null) Return the first ChildGametypes matching the query
+ * @method     ChildGametypes|null findOne(ConnectionInterface $con = null) Return the first ChildGametypes matching the query
  * @method     ChildGametypes findOneOrCreate(ConnectionInterface $con = null) Return the first ChildGametypes matching the query, or a new ChildGametypes object populated from the query conditions when no match is found
  *
- * @method     ChildGametypes findOneById(int $id) Return the first ChildGametypes filtered by the id column
- * @method     ChildGametypes findOneByCode(int $code) Return the first ChildGametypes filtered by the code column
- * @method     ChildGametypes findOneByName(string $name) Return the first ChildGametypes filtered by the name column
- * @method     ChildGametypes findOneByDescription(string $description) Return the first ChildGametypes filtered by the description column *
+ * @method     ChildGametypes|null findOneById(int $id) Return the first ChildGametypes filtered by the id column
+ * @method     ChildGametypes|null findOneByCode(int $code) Return the first ChildGametypes filtered by the code column
+ * @method     ChildGametypes|null findOneByName(string $name) Return the first ChildGametypes filtered by the name column
+ * @method     ChildGametypes|null findOneByDescription(string $description) Return the first ChildGametypes filtered by the description column *
 
  * @method     ChildGametypes requirePk($key, ConnectionInterface $con = null) Return the ChildGametypes by primary key and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildGametypes requireOne(ConnectionInterface $con = null) Return the first ChildGametypes matching the query and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
@@ -54,11 +54,17 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildGametypes requireOneByDescription(string $description) Return the first ChildGametypes filtered by the description column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  *
  * @method     ChildGametypes[]|ObjectCollection find(ConnectionInterface $con = null) Return ChildGametypes objects based on current ModelCriteria
+ * @psalm-method ObjectCollection&\Traversable<ChildGametypes> find(ConnectionInterface $con = null) Return ChildGametypes objects based on current ModelCriteria
  * @method     ChildGametypes[]|ObjectCollection findById(int $id) Return ChildGametypes objects filtered by the id column
+ * @psalm-method ObjectCollection&\Traversable<ChildGametypes> findById(int $id) Return ChildGametypes objects filtered by the id column
  * @method     ChildGametypes[]|ObjectCollection findByCode(int $code) Return ChildGametypes objects filtered by the code column
+ * @psalm-method ObjectCollection&\Traversable<ChildGametypes> findByCode(int $code) Return ChildGametypes objects filtered by the code column
  * @method     ChildGametypes[]|ObjectCollection findByName(string $name) Return ChildGametypes objects filtered by the name column
+ * @psalm-method ObjectCollection&\Traversable<ChildGametypes> findByName(string $name) Return ChildGametypes objects filtered by the name column
  * @method     ChildGametypes[]|ObjectCollection findByDescription(string $description) Return ChildGametypes objects filtered by the description column
+ * @psalm-method ObjectCollection&\Traversable<ChildGametypes> findByDescription(string $description) Return ChildGametypes objects filtered by the description column
  * @method     ChildGametypes[]|\Propel\Runtime\Util\PropelModelPager paginate($page = 1, $maxPerPage = 10, ConnectionInterface $con = null) Issue a SELECT query based on the current ModelCriteria and uses a page and a maximum number of results per page to compute an offset and a limit
+ * @psalm-method \Propel\Runtime\Util\PropelModelPager&\Traversable<ChildGametypes> paginate($page = 1, $maxPerPage = 10, ConnectionInterface $con = null) Issue a SELECT query based on the current ModelCriteria and uses a page and a maximum number of results per page to compute an offset and a limit
  *
  */
 abstract class GametypesQuery extends ModelCriteria
@@ -335,9 +341,10 @@ abstract class GametypesQuery extends ModelCriteria
      * <code>
      * $query->filterByName('fooValue');   // WHERE name = 'fooValue'
      * $query->filterByName('%fooValue%', Criteria::LIKE); // WHERE name LIKE '%fooValue%'
+     * $query->filterByName(['foo', 'bar']); // WHERE name IN ('foo', 'bar')
      * </code>
      *
-     * @param     string $name The value to use as filter.
+     * @param     string|string[] $name The value to use as filter.
      * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
      *
      * @return $this|ChildGametypesQuery The current query, for fluid interface
@@ -360,9 +367,10 @@ abstract class GametypesQuery extends ModelCriteria
      * <code>
      * $query->filterByDescription('fooValue');   // WHERE description = 'fooValue'
      * $query->filterByDescription('%fooValue%', Criteria::LIKE); // WHERE description LIKE '%fooValue%'
+     * $query->filterByDescription(['foo', 'bar']); // WHERE description IN ('foo', 'bar')
      * </code>
      *
-     * @param     string $description The value to use as filter.
+     * @param     string|string[] $description The value to use as filter.
      * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
      *
      * @return $this|ChildGametypesQuery The current query, for fluid interface

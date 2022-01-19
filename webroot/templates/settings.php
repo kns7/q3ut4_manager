@@ -1,3 +1,16 @@
+<?php
+if(isset($_SESSION['darkmode'])){
+    if($_SESSION['darkmode'] == 1){
+        $btnmode = "btn-dark";
+        $btnoutline = "btn-outline-light";
+        $text = "text-light";
+    }else{
+        $btnmode = "btn-light";
+        $btnoutline = "btn-outline-dark";
+        $text = "text-dark";
+    }
+}
+?>
 <div class="modal-header">
     <h5>Paramètres du serveur</h5>
     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -84,7 +97,7 @@
                             <small>
                                 <strong class="text-primary">Oui</strong> Le serveur charge immédiatement la nouvelle configuration et relance la partie
                                 <br/>
-                                <strong class="text-dark">Non</strong> Le serveur chargera la nouvelle configuration au prochain changement de carte
+                                <strong class="<?= $text;?>">Non</strong> Le serveur chargera la nouvelle configuration au prochain changement de carte
                             </small>
                         </p>
                         <p>
@@ -97,6 +110,6 @@
     </div>
 </div>
 <div class="modal-footer">
-    <button type="button" class="btn btn-outline-dark" data-dismiss="modal"><i class="fa fa-chevron-left"></i> Retour</button>
+    <button type="button" class="btn <?=$btnoutline;?>" data-dismiss="modal"><i class="fa fa-chevron-left"></i> Retour</button>
     <button type="button" class="btn btn-outline-success btn-saveparams"><i class="fa fa-save"></i> Enregistrer</button>
 </div>

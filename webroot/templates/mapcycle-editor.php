@@ -41,7 +41,7 @@ include('header.php');
         </div>
     </div>
     <div class="col-3">
-        <a type="button" class="btn btn-block btn-outline-dark" href="/"><i class="fa fa-chevron-left"></i> Retour</a>
+        <a type="button" class="btn btn-block <?=$btnoutline;?>" href="/"><i class="fa fa-chevron-left"></i> Retour</a>
         <button type="button" class="btn btn-block btn-outline-success btn-savemapcycle"><i class="fa fa-save"></i> Enregistrer</button>
     </div>
 </div>

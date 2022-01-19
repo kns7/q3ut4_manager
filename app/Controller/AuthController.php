@@ -26,6 +26,7 @@ class AuthController extends Controller
     {
         if($password == $this->config->wwwpassword){
             $_SESSION['authOK'] = 'userlogged';
+            $_SESSION['darkmode'] = 1;
             return true;
         }else{
             unset($_SESSION['authOK']);
