@@ -41,15 +41,15 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildMapsQuery rightJoinWith($relation) Adds a RIGHT JOIN clause and with to the query
  * @method     ChildMapsQuery innerJoinWith($relation) Adds a INNER JOIN clause and with to the query
  *
- * @method     ChildMaps findOne(ConnectionInterface $con = null) Return the first ChildMaps matching the query
+ * @method     ChildMaps|null findOne(ConnectionInterface $con = null) Return the first ChildMaps matching the query
  * @method     ChildMaps findOneOrCreate(ConnectionInterface $con = null) Return the first ChildMaps matching the query, or a new ChildMaps object populated from the query conditions when no match is found
  *
- * @method     ChildMaps findOneById(int $id) Return the first ChildMaps filtered by the id column
- * @method     ChildMaps findOneByFile(string $file) Return the first ChildMaps filtered by the file column
- * @method     ChildMaps findOneByName(string $name) Return the first ChildMaps filtered by the name column
- * @method     ChildMaps findOneByImgurl(string $imgurl) Return the first ChildMaps filtered by the imgurl column
- * @method     ChildMaps findOneByDescription(string $description) Return the first ChildMaps filtered by the description column
- * @method     ChildMaps findOneBySize(string $size) Return the first ChildMaps filtered by the size column *
+ * @method     ChildMaps|null findOneById(int $id) Return the first ChildMaps filtered by the id column
+ * @method     ChildMaps|null findOneByFile(string $file) Return the first ChildMaps filtered by the file column
+ * @method     ChildMaps|null findOneByName(string $name) Return the first ChildMaps filtered by the name column
+ * @method     ChildMaps|null findOneByImgurl(string $imgurl) Return the first ChildMaps filtered by the imgurl column
+ * @method     ChildMaps|null findOneByDescription(string $description) Return the first ChildMaps filtered by the description column
+ * @method     ChildMaps|null findOneBySize(string $size) Return the first ChildMaps filtered by the size column *
 
  * @method     ChildMaps requirePk($key, ConnectionInterface $con = null) Return the ChildMaps by primary key and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildMaps requireOne(ConnectionInterface $con = null) Return the first ChildMaps matching the query and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
@@ -62,13 +62,21 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildMaps requireOneBySize(string $size) Return the first ChildMaps filtered by the size column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  *
  * @method     ChildMaps[]|ObjectCollection find(ConnectionInterface $con = null) Return ChildMaps objects based on current ModelCriteria
+ * @psalm-method ObjectCollection&\Traversable<ChildMaps> find(ConnectionInterface $con = null) Return ChildMaps objects based on current ModelCriteria
  * @method     ChildMaps[]|ObjectCollection findById(int $id) Return ChildMaps objects filtered by the id column
+ * @psalm-method ObjectCollection&\Traversable<ChildMaps> findById(int $id) Return ChildMaps objects filtered by the id column
  * @method     ChildMaps[]|ObjectCollection findByFile(string $file) Return ChildMaps objects filtered by the file column
+ * @psalm-method ObjectCollection&\Traversable<ChildMaps> findByFile(string $file) Return ChildMaps objects filtered by the file column
  * @method     ChildMaps[]|ObjectCollection findByName(string $name) Return ChildMaps objects filtered by the name column
+ * @psalm-method ObjectCollection&\Traversable<ChildMaps> findByName(string $name) Return ChildMaps objects filtered by the name column
  * @method     ChildMaps[]|ObjectCollection findByImgurl(string $imgurl) Return ChildMaps objects filtered by the imgurl column
+ * @psalm-method ObjectCollection&\Traversable<ChildMaps> findByImgurl(string $imgurl) Return ChildMaps objects filtered by the imgurl column
  * @method     ChildMaps[]|ObjectCollection findByDescription(string $description) Return ChildMaps objects filtered by the description column
+ * @psalm-method ObjectCollection&\Traversable<ChildMaps> findByDescription(string $description) Return ChildMaps objects filtered by the description column
  * @method     ChildMaps[]|ObjectCollection findBySize(string $size) Return ChildMaps objects filtered by the size column
+ * @psalm-method ObjectCollection&\Traversable<ChildMaps> findBySize(string $size) Return ChildMaps objects filtered by the size column
  * @method     ChildMaps[]|\Propel\Runtime\Util\PropelModelPager paginate($page = 1, $maxPerPage = 10, ConnectionInterface $con = null) Issue a SELECT query based on the current ModelCriteria and uses a page and a maximum number of results per page to compute an offset and a limit
+ * @psalm-method \Propel\Runtime\Util\PropelModelPager&\Traversable<ChildMaps> paginate($page = 1, $maxPerPage = 10, ConnectionInterface $con = null) Issue a SELECT query based on the current ModelCriteria and uses a page and a maximum number of results per page to compute an offset and a limit
  *
  */
 abstract class MapsQuery extends ModelCriteria
@@ -304,9 +312,10 @@ abstract class MapsQuery extends ModelCriteria
      * <code>
      * $query->filterByFile('fooValue');   // WHERE file = 'fooValue'
      * $query->filterByFile('%fooValue%', Criteria::LIKE); // WHERE file LIKE '%fooValue%'
+     * $query->filterByFile(['foo', 'bar']); // WHERE file IN ('foo', 'bar')
      * </code>
      *
-     * @param     string $file The value to use as filter.
+     * @param     string|string[] $file The value to use as filter.
      * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
      *
      * @return $this|ChildMapsQuery The current query, for fluid interface
@@ -329,9 +338,10 @@ abstract class MapsQuery extends ModelCriteria
      * <code>
      * $query->filterByName('fooValue');   // WHERE name = 'fooValue'
      * $query->filterByName('%fooValue%', Criteria::LIKE); // WHERE name LIKE '%fooValue%'
+     * $query->filterByName(['foo', 'bar']); // WHERE name IN ('foo', 'bar')
      * </code>
      *
-     * @param     string $name The value to use as filter.
+     * @param     string|string[] $name The value to use as filter.
      * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
      *
      * @return $this|ChildMapsQuery The current query, for fluid interface
@@ -354,9 +364,10 @@ abstract class MapsQuery extends ModelCriteria
      * <code>
      * $query->filterByImgurl('fooValue');   // WHERE imgurl = 'fooValue'
      * $query->filterByImgurl('%fooValue%', Criteria::LIKE); // WHERE imgurl LIKE '%fooValue%'
+     * $query->filterByImgurl(['foo', 'bar']); // WHERE imgurl IN ('foo', 'bar')
      * </code>
      *
-     * @param     string $imgurl The value to use as filter.
+     * @param     string|string[] $imgurl The value to use as filter.
      * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
      *
      * @return $this|ChildMapsQuery The current query, for fluid interface
@@ -379,9 +390,10 @@ abstract class MapsQuery extends ModelCriteria
      * <code>
      * $query->filterByDescription('fooValue');   // WHERE description = 'fooValue'
      * $query->filterByDescription('%fooValue%', Criteria::LIKE); // WHERE description LIKE '%fooValue%'
+     * $query->filterByDescription(['foo', 'bar']); // WHERE description IN ('foo', 'bar')
      * </code>
      *
-     * @param     string $description The value to use as filter.
+     * @param     string|string[] $description The value to use as filter.
      * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
      *
      * @return $this|ChildMapsQuery The current query, for fluid interface
@@ -404,9 +416,10 @@ abstract class MapsQuery extends ModelCriteria
      * <code>
      * $query->filterBySize('fooValue');   // WHERE size = 'fooValue'
      * $query->filterBySize('%fooValue%', Criteria::LIKE); // WHERE size LIKE '%fooValue%'
+     * $query->filterBySize(['foo', 'bar']); // WHERE size IN ('foo', 'bar')
      * </code>
      *
-     * @param     string $size The value to use as filter.
+     * @param     string|string[] $size The value to use as filter.
      * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
      *
      * @return $this|ChildMapsQuery The current query, for fluid interface

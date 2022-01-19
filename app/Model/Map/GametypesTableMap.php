@@ -124,6 +124,38 @@ class GametypesTableMap extends TableMap
     );
 
     /**
+     * Holds a list of column names and their normalized version.
+     *
+     * @var string[]
+     */
+    protected $normalizedColumnNameMap = [
+        'Id' => 'ID',
+        'Gametypes.Id' => 'ID',
+        'id' => 'ID',
+        'gametypes.id' => 'ID',
+        'GametypesTableMap::COL_ID' => 'ID',
+        'COL_ID' => 'ID',
+        'Code' => 'CODE',
+        'Gametypes.Code' => 'CODE',
+        'code' => 'CODE',
+        'gametypes.code' => 'CODE',
+        'GametypesTableMap::COL_CODE' => 'CODE',
+        'COL_CODE' => 'CODE',
+        'Name' => 'NAME',
+        'Gametypes.Name' => 'NAME',
+        'name' => 'NAME',
+        'gametypes.name' => 'NAME',
+        'GametypesTableMap::COL_NAME' => 'NAME',
+        'COL_NAME' => 'NAME',
+        'Description' => 'DESCRIPTION',
+        'Gametypes.Description' => 'DESCRIPTION',
+        'description' => 'DESCRIPTION',
+        'gametypes.description' => 'DESCRIPTION',
+        'GametypesTableMap::COL_DESCRIPTION' => 'DESCRIPTION',
+        'COL_DESCRIPTION' => 'DESCRIPTION',
+    ];
+
+    /**
      * Initialize the table attributes and columns
      * Relations are not initialized by this method since they are lazy loaded
      *
@@ -148,6 +180,8 @@ class GametypesTableMap extends TableMap
 
     /**
      * Build the RelationMap objects for this table relationships
+     *
+     * @return void
      */
     public function buildRelations()
     {
@@ -205,7 +239,7 @@ class GametypesTableMap extends TableMap
      * relative to a location on the PHP include_path.
      * (e.g. path.to.MyClass -> 'path/to/MyClass.php')
      *
-     * @param boolean $withPrefix Whether or not to return the path with the class name
+     * @param boolean $withPrefix Whether to return the path with the class name
      * @return string path.to.ClassName
      */
     public static function getOMClass($withPrefix = true)
@@ -307,6 +341,32 @@ class GametypesTableMap extends TableMap
     }
 
     /**
+     * Remove all the columns needed to create a new object.
+     *
+     * Note: any columns that were marked with lazyLoad="true" in the
+     * XML schema will not be removed as they are only loaded on demand.
+     *
+     * @param Criteria $criteria object containing the columns to remove.
+     * @param string   $alias    optional table alias
+     * @throws PropelException Any exceptions caught during processing will be
+     *                         rethrown wrapped into a PropelException.
+     */
+    public static function removeSelectColumns(Criteria $criteria, $alias = null)
+    {
+        if (null === $alias) {
+            $criteria->removeSelectColumn(GametypesTableMap::COL_ID);
+            $criteria->removeSelectColumn(GametypesTableMap::COL_CODE);
+            $criteria->removeSelectColumn(GametypesTableMap::COL_NAME);
+            $criteria->removeSelectColumn(GametypesTableMap::COL_DESCRIPTION);
+        } else {
+            $criteria->removeSelectColumn($alias . '.id');
+            $criteria->removeSelectColumn($alias . '.code');
+            $criteria->removeSelectColumn($alias . '.name');
+            $criteria->removeSelectColumn($alias . '.description');
+        }
+    }
+
+    /**
      * Returns the TableMap related to this object.
      * This method is not needed for general use but a specific application could have a need.
      * @return TableMap
@@ -316,17 +376,6 @@ class GametypesTableMap extends TableMap
     public static function getTableMap()
     {
         return Propel::getServiceContainer()->getDatabaseMap(GametypesTableMap::DATABASE_NAME)->getTable(GametypesTableMap::TABLE_NAME);
-    }
-
-    /**
-     * Add a TableMap instance to the database for this tableMap class.
-     */
-    public static function buildTableMap()
-    {
-        $dbMap = Propel::getServiceContainer()->getDatabaseMap(GametypesTableMap::DATABASE_NAME);
-        if (!$dbMap->hasTable(GametypesTableMap::TABLE_NAME)) {
-            $dbMap->addTableObject(new GametypesTableMap());
-        }
     }
 
     /**
@@ -418,6 +467,3 @@ class GametypesTableMap extends TableMap
     }
 
 } // GametypesTableMap
-// This is the static code needed to register the TableMap for this table with the main Propel class.
-//
-GametypesTableMap::buildTableMap();

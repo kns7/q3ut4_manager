@@ -114,6 +114,26 @@ class ConfigTableMap extends TableMap
     );
 
     /**
+     * Holds a list of column names and their normalized version.
+     *
+     * @var string[]
+     */
+    protected $normalizedColumnNameMap = [
+        'Key' => 'KEY',
+        'Config.Key' => 'KEY',
+        'key' => 'KEY',
+        'config.key' => 'KEY',
+        'ConfigTableMap::COL_KEY' => 'KEY',
+        'COL_KEY' => 'KEY',
+        'Value' => 'VALUE',
+        'Config.Value' => 'VALUE',
+        'value' => 'VALUE',
+        'config.value' => 'VALUE',
+        'ConfigTableMap::COL_VALUE' => 'VALUE',
+        'COL_VALUE' => 'VALUE',
+    ];
+
+    /**
      * Initialize the table attributes and columns
      * Relations are not initialized by this method since they are lazy loaded
      *
@@ -136,6 +156,8 @@ class ConfigTableMap extends TableMap
 
     /**
      * Build the RelationMap objects for this table relationships
+     *
+     * @return void
      */
     public function buildRelations()
     {
@@ -193,7 +215,7 @@ class ConfigTableMap extends TableMap
      * relative to a location on the PHP include_path.
      * (e.g. path.to.MyClass -> 'path/to/MyClass.php')
      *
-     * @param boolean $withPrefix Whether or not to return the path with the class name
+     * @param boolean $withPrefix Whether to return the path with the class name
      * @return string path.to.ClassName
      */
     public static function getOMClass($withPrefix = true)
@@ -291,6 +313,28 @@ class ConfigTableMap extends TableMap
     }
 
     /**
+     * Remove all the columns needed to create a new object.
+     *
+     * Note: any columns that were marked with lazyLoad="true" in the
+     * XML schema will not be removed as they are only loaded on demand.
+     *
+     * @param Criteria $criteria object containing the columns to remove.
+     * @param string   $alias    optional table alias
+     * @throws PropelException Any exceptions caught during processing will be
+     *                         rethrown wrapped into a PropelException.
+     */
+    public static function removeSelectColumns(Criteria $criteria, $alias = null)
+    {
+        if (null === $alias) {
+            $criteria->removeSelectColumn(ConfigTableMap::COL_KEY);
+            $criteria->removeSelectColumn(ConfigTableMap::COL_VALUE);
+        } else {
+            $criteria->removeSelectColumn($alias . '.key');
+            $criteria->removeSelectColumn($alias . '.value');
+        }
+    }
+
+    /**
      * Returns the TableMap related to this object.
      * This method is not needed for general use but a specific application could have a need.
      * @return TableMap
@@ -300,17 +344,6 @@ class ConfigTableMap extends TableMap
     public static function getTableMap()
     {
         return Propel::getServiceContainer()->getDatabaseMap(ConfigTableMap::DATABASE_NAME)->getTable(ConfigTableMap::TABLE_NAME);
-    }
-
-    /**
-     * Add a TableMap instance to the database for this tableMap class.
-     */
-    public static function buildTableMap()
-    {
-        $dbMap = Propel::getServiceContainer()->getDatabaseMap(ConfigTableMap::DATABASE_NAME);
-        if (!$dbMap->hasTable(ConfigTableMap::TABLE_NAME)) {
-            $dbMap->addTableObject(new ConfigTableMap());
-        }
     }
 
     /**
@@ -398,6 +431,3 @@ class ConfigTableMap extends TableMap
     }
 
 } // ConfigTableMap
-// This is the static code needed to register the TableMap for this table with the main Propel class.
-//
-ConfigTableMap::buildTableMap();

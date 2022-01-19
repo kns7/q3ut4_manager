@@ -134,6 +134,50 @@ class MapsTableMap extends TableMap
     );
 
     /**
+     * Holds a list of column names and their normalized version.
+     *
+     * @var string[]
+     */
+    protected $normalizedColumnNameMap = [
+        'Id' => 'ID',
+        'Maps.Id' => 'ID',
+        'id' => 'ID',
+        'maps.id' => 'ID',
+        'MapsTableMap::COL_ID' => 'ID',
+        'COL_ID' => 'ID',
+        'File' => 'FILE',
+        'Maps.File' => 'FILE',
+        'file' => 'FILE',
+        'maps.file' => 'FILE',
+        'MapsTableMap::COL_FILE' => 'FILE',
+        'COL_FILE' => 'FILE',
+        'Name' => 'NAME',
+        'Maps.Name' => 'NAME',
+        'name' => 'NAME',
+        'maps.name' => 'NAME',
+        'MapsTableMap::COL_NAME' => 'NAME',
+        'COL_NAME' => 'NAME',
+        'Imgurl' => 'IMGURL',
+        'Maps.Imgurl' => 'IMGURL',
+        'imgurl' => 'IMGURL',
+        'maps.imgurl' => 'IMGURL',
+        'MapsTableMap::COL_IMGURL' => 'IMGURL',
+        'COL_IMGURL' => 'IMGURL',
+        'Description' => 'DESCRIPTION',
+        'Maps.Description' => 'DESCRIPTION',
+        'description' => 'DESCRIPTION',
+        'maps.description' => 'DESCRIPTION',
+        'MapsTableMap::COL_DESCRIPTION' => 'DESCRIPTION',
+        'COL_DESCRIPTION' => 'DESCRIPTION',
+        'Size' => 'SIZE',
+        'Maps.Size' => 'SIZE',
+        'size' => 'SIZE',
+        'maps.size' => 'SIZE',
+        'MapsTableMap::COL_SIZE' => 'SIZE',
+        'COL_SIZE' => 'SIZE',
+    ];
+
+    /**
      * Initialize the table attributes and columns
      * Relations are not initialized by this method since they are lazy loaded
      *
@@ -160,6 +204,8 @@ class MapsTableMap extends TableMap
 
     /**
      * Build the RelationMap objects for this table relationships
+     *
+     * @return void
      */
     public function buildRelations()
     {
@@ -217,7 +263,7 @@ class MapsTableMap extends TableMap
      * relative to a location on the PHP include_path.
      * (e.g. path.to.MyClass -> 'path/to/MyClass.php')
      *
-     * @param boolean $withPrefix Whether or not to return the path with the class name
+     * @param boolean $withPrefix Whether to return the path with the class name
      * @return string path.to.ClassName
      */
     public static function getOMClass($withPrefix = true)
@@ -323,6 +369,36 @@ class MapsTableMap extends TableMap
     }
 
     /**
+     * Remove all the columns needed to create a new object.
+     *
+     * Note: any columns that were marked with lazyLoad="true" in the
+     * XML schema will not be removed as they are only loaded on demand.
+     *
+     * @param Criteria $criteria object containing the columns to remove.
+     * @param string   $alias    optional table alias
+     * @throws PropelException Any exceptions caught during processing will be
+     *                         rethrown wrapped into a PropelException.
+     */
+    public static function removeSelectColumns(Criteria $criteria, $alias = null)
+    {
+        if (null === $alias) {
+            $criteria->removeSelectColumn(MapsTableMap::COL_ID);
+            $criteria->removeSelectColumn(MapsTableMap::COL_FILE);
+            $criteria->removeSelectColumn(MapsTableMap::COL_NAME);
+            $criteria->removeSelectColumn(MapsTableMap::COL_IMGURL);
+            $criteria->removeSelectColumn(MapsTableMap::COL_DESCRIPTION);
+            $criteria->removeSelectColumn(MapsTableMap::COL_SIZE);
+        } else {
+            $criteria->removeSelectColumn($alias . '.id');
+            $criteria->removeSelectColumn($alias . '.file');
+            $criteria->removeSelectColumn($alias . '.name');
+            $criteria->removeSelectColumn($alias . '.imgurl');
+            $criteria->removeSelectColumn($alias . '.description');
+            $criteria->removeSelectColumn($alias . '.size');
+        }
+    }
+
+    /**
      * Returns the TableMap related to this object.
      * This method is not needed for general use but a specific application could have a need.
      * @return TableMap
@@ -332,17 +408,6 @@ class MapsTableMap extends TableMap
     public static function getTableMap()
     {
         return Propel::getServiceContainer()->getDatabaseMap(MapsTableMap::DATABASE_NAME)->getTable(MapsTableMap::TABLE_NAME);
-    }
-
-    /**
-     * Add a TableMap instance to the database for this tableMap class.
-     */
-    public static function buildTableMap()
-    {
-        $dbMap = Propel::getServiceContainer()->getDatabaseMap(MapsTableMap::DATABASE_NAME);
-        if (!$dbMap->hasTable(MapsTableMap::TABLE_NAME)) {
-            $dbMap->addTableObject(new MapsTableMap());
-        }
     }
 
     /**
@@ -434,6 +499,3 @@ class MapsTableMap extends TableMap
     }
 
 } // MapsTableMap
-// This is the static code needed to register the TableMap for this table with the main Propel class.
-//
-MapsTableMap::buildTableMap();
