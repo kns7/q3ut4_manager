@@ -152,6 +152,7 @@ if($app->Ctrl->Auth->isauth()){
             ];
             $app->render('settings.php',compact('app','maps','gametypes','cvars','actual'));
         });
+
         $app->get('/gametype-desc/:id',function($id) use($app){
             $gametype = $app->Ctrl->Gametypes->get($id);
             if(!is_null($gametype)){
@@ -192,6 +193,12 @@ if($app->Ctrl->Auth->isauth()){
                 $app->response()->headers->set('Content-Type','application/json; charset=utf-8');
                 $app->Ctrl->Maps->setMapCycle($_POST['maps']);
             });
+
+            $app->post('/darkmode/:status',function($status) use($app){
+                $app->response->setStatus(200);
+                $app->response()->headers->set('Content-Type','application/json; charset=utf-8');
+                echo json_encode($app->Ctrl->Maps->setDarkmode($status));
+            });
         });
     });
 }
@@ -231,6 +238,12 @@ if($app->getMode() == "development"){
             sleep(1);
             $app->Ctrl->RCON->sendMessage("va");
             sleep(1);
+        });
+
+        $app->get('/session',function() use($app){
+            echo "<pre>";
+            var_dump($_SESSION);
+            echo "</pre>";
         });
 
         $app->get('/players',function() use($app){

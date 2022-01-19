@@ -1,0 +1,42 @@
+body {
+    background-color: #181818;
+}
+h1,h2,h3,h4,h5,h6 {
+    color: white;
+}
+label {
+    color: #fafafa;
+}
+p {
+    color: #eaeaea;
+}
+.text-muted {
+    color: #cacaca!important;
+}
+.modal-content {
+    background-color: #484848;
+}
+.modal-header, .modal-footer {
+    border-color: #080808;
+}
+.modal-header .close {
+    color: #dadada;
+}
+input.form-control,
+select.form-control {
+    background-color: #686868;
+    color: white;
+    border-color: #181818;
+}
+.input-group-text {
+    background-color: #484848;
+    color: white;
+    border-color: #181818;
+}
+.list-group-item {
+    background-color: #686868;
+}
+.border {
+    background-color: #383838;
+    border-color: #686868!important;
+}

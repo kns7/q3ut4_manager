@@ -158,6 +158,14 @@ $(document).ready(function(){
                }
            })
        })
+       .on('click','.darkmode',function(e){
+           e.preventDefault();
+           e.stopPropagation();
+           var status = $(this).attr('data-dark');
+           $.post('/ajax/action/darkmode/'+status,function(d){
+              window.location.reload();
+           });
+       })
 
 
         $('.list-group-sortable').sortable({
